@@ -4,6 +4,9 @@ target 'CtaReactiveMaster' do
   use_frameworks!
 
   pod 'Nuke'
+  pod 'Alamofire'
+  pod 'SwiftyJSON'
+  pod 'Kingfisher'
 
   target 'CtaReactiveMasterTests' do
     inherit! :search_paths
