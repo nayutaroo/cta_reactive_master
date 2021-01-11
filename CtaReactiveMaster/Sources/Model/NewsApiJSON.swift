@@ -4,7 +4,7 @@
 //
 //  Created by 化田晃平 on R 3/01/08.
 //
-import UIKit
+import Foundation
 
 struct JsonData: Decodable{
     let status: String?

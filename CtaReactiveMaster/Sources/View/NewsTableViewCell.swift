@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-class NewsTableViewCell: UITableViewCell {
+final class NewsTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var publishedAtLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet private weak var publishedAtLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var iconImageView: UIImageView!
     
     static var identifier: String {
         String(describing: self)
@@ -20,14 +20,6 @@ class NewsTableViewCell: UITableViewCell {
     
     static var nib: UINib {
         UINib(nibName: identifier, bundle: nil)
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
     
     override func prepareForReuse() {
@@ -40,19 +32,22 @@ class NewsTableViewCell: UITableViewCell {
     }
     
     func configure(with article: Article) {
-        let article = article
-        titleLabel.text = article.title ?? ""
+        titleLabel.text = article.title
         let publishedAt = article.publishedAt ?? ""
         let date = DateUtils.dateFromString(string: publishedAt, format: "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'")
-        guard let unwrappedDate = date else{
-            return
+        
+        //guardはスコープの問題でエラーに
+        if let date = date {
+            let formattedDate = DateUtils.stringFromDate(date: date, format: "yyyy年 MM月dd日  HH時mm分")
+            publishedAtLabel.text = formattedDate
+            guard let url = URL(string: article.urlToImage ?? "")
+            else{
+                return
+            }
+            setImage(with: url)
         }
-        let formattedDate = DateUtils.stringFromDate(date: unwrappedDate, format: "yyyy年MM月dd日 HH時mm分")
-        publishedAtLabel.text = formattedDate
-        guard let url = URL(string: article.urlToImage ?? "")
         else{
             return
         }
-        setImage(with: url)
     }
 }
