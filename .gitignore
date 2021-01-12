@@ -7,7 +7,6 @@ project.xcworkspace
 *.xcworkspace/xcuserdata/*
 xcuserdata
 /Pods/*
-*/xcodeproj/Frameworks
 /DerivedData
 
 # Bundler

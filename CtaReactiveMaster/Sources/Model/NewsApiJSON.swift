@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct NewsJSON: Decodable{
+struct News: Decodable{
     let status: String?
     let totalResults: Int?
     let articles: [Article]

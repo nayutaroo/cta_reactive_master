@@ -35,7 +35,6 @@ final class HomeViewController: UIViewController {
        
         activityIndicator.startAnimating()
         fetchNewsAPI()
-        activityIndicator.stopAnimating()
     }
     
     private func fetchNewsAPI(){
@@ -52,7 +51,7 @@ final class HomeViewController: UIViewController {
                         //APIのデータに従った構造体を書く → 取得するJSONのデータに合わせた構造体jsonDataを定義
                         let jsonDecoder = JSONDecoder()
                         jsonDecoder.dateDecodingStrategy = .iso8601
-                        let jsonData = try jsonDecoder.decode(NewsJSON.self, from: data)
+                        let jsonData = try jsonDecoder.decode(News.self, from: data)
                         self.articles = jsonData.articles
                     }
                     catch let error{
@@ -61,6 +60,7 @@ final class HomeViewController: UIViewController {
                         return
                     }
                     self.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
                     break
                     
                 case .failure(let error):
