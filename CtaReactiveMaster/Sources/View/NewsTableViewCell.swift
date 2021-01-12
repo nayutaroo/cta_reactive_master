@@ -27,27 +27,18 @@ final class NewsTableViewCell: UITableViewCell {
         iconImageView.kf.cancelDownloadTask()
     }
     
-    func setImage(with url: URL) {
+    private func setImage(with url: URL) {
         iconImageView.kf.setImage(with: url)
     }
     
     func configure(with article: Article) {
         titleLabel.text = article.title
-        let publishedAt = article.publishedAt ?? ""
-        let date = DateUtils.dateFromString(string: publishedAt, format: "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'")
-        
-        //guardはスコープの問題でエラーに
-        if let date = date {
-            let formattedDate = DateUtils.stringFromDate(date: date, format: "yyyy年 MM月dd日  HH時mm分")
-            publishedAtLabel.text = formattedDate
-            guard let url = URL(string: article.urlToImage ?? "")
-            else{
-                return
-            }
-            setImage(with: url)
-        }
-        else{
-            return
-        }
+    
+        guard let date = article.publishedAt else { return }
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "yyyy年 MM月dd日  HH時mm分"
+        publishedAtLabel.text = formatter.string(from: date)
+        guard let url = URL(string: article.urlToImage ?? "") else{ return }
+        setImage(with: url)
     }
 }

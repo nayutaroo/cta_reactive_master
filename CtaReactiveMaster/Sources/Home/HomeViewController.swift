@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import SafariServices
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!{
@@ -39,23 +40,23 @@ final class HomeViewController: UIViewController {
     
     private func fetchNewsAPI(){
         
-        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-11&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
+        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-12&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
         
             guard let self = self else {return}
 
             switch response.result {
                 case .success(let data):
-                    guard let data = data
-                    else{
-                        return
-                    }
+                    guard let data = data else{ return }
                     
                     do{
                         //APIのデータに従った構造体を書く → 取得するJSONのデータに合わせた構造体jsonDataを定義
-                        let jsonData = try JSONDecoder().decode(JsonData.self, from: data)
+                        let jsonDecoder = JSONDecoder()
+                        jsonDecoder.dateDecodingStrategy = .iso8601
+                        let jsonData = try jsonDecoder.decode(NewsJSON.self, from: data)
                         self.articles = jsonData.articles
                     }
                     catch let error{
+                        self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
                         print(error)
                         return
                     }
@@ -64,7 +65,7 @@ final class HomeViewController: UIViewController {
                     
                 case .failure(let error):
                     //selfをあらかじめアンラップすることによりfetchnewsAPI → ?? () -> ()を使用することがない状態に
-                    UIAlertController.showRetryAlert(to: self, with: error, retryhandler: self.fetchNewsAPI)
+                    self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
                     print(error)
             }
             
@@ -75,6 +76,15 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    func showRetryAlert(with error: Error, retryhandler: @escaping () -> ()) {
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Retry", style: .default) { _ in
+            retryhandler()
+        })
+        present(alertController, animated: true, completion: nil)
+    }
+    
     @objc func refresh(sender: UIRefreshControl){
         fetchNewsAPI()
     }
@@ -82,11 +92,8 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = articles[indexPath.row].url
-        else {
-            return
-        }
-        navigationController?.pushViewController(WebDetailViewController(url: url), animated: true)
+        guard let url = URL(string:articles[indexPath.row].url ?? "") else { return }
+        present(SFSafariViewController(url: url), animated: true)
     }
 }
 

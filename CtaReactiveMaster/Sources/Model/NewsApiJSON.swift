@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct JsonData: Decodable{
+struct NewsJSON: Decodable{
     let status: String?
     let totalResults: Int?
     let articles: [Article]
@@ -17,9 +17,9 @@ struct Article: Decodable{
     let author: String?
     let title: String?
     let description: String?
-    let url: URL?
+    let url: String?
     let urlToImage: String?
-    let publishedAt: String?
+    let publishedAt: Date?
     let content: String?
 }
 

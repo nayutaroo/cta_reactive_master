@@ -21,7 +21,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             self.window = window
             window.rootViewController = UINavigationController(rootViewController: HomeViewController(nibName: nil, bundle: nil))
-//            window.rootViewController = HomeViewController(nibName: nil, bundle: nil)
             window.makeKeyAndVisible()
     }
 
