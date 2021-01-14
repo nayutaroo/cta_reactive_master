@@ -39,7 +39,7 @@ final class HomeViewController: UIViewController {
     
     private func fetchNewsAPI(){
         
-        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-12&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
+        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-14&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
         
             guard let self = self else {return}
 
@@ -51,32 +51,38 @@ final class HomeViewController: UIViewController {
                         //APIのデータに従った構造体を書く → 取得するJSONのデータに合わせた構造体jsonDataを定義
                         let jsonDecoder = JSONDecoder()
                         jsonDecoder.dateDecodingStrategy = .iso8601
-                        let jsonData = try jsonDecoder.decode(News.self, from: data)
-                        self.articles = jsonData.articles
+                        let news = try jsonDecoder.decode(News.self, from: data)
+                        self.articles = news.articles
                     }
                     catch let error{
-                        self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
                         print(error)
+                        self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
+                        self.AfterFetch()
                         return
                     }
                     self.tableView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                    break
                     
                 case .failure(let error):
                     //selfをあらかじめアンラップすることによりfetchnewsAPI → ?? () -> ()を使用することがない状態に
                     self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
                     print(error)
+                    
+                    
+
             }
-            
-            let isRefreshing = self.tableView.refreshControl?.isRefreshing ?? false
-            if isRefreshing{
-                self.tableView.refreshControl?.endRefreshing()
-            }
+            self.AfterFetch()
         }
     }
     
-    func showRetryAlert(with error: Error, retryhandler: @escaping () -> ()) {
+    private func AfterFetch(){
+        self.activityIndicator.stopAnimating()
+        let isRefreshing = self.tableView.refreshControl?.isRefreshing ?? false
+        if isRefreshing {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    private func showRetryAlert(with error: Error, retryhandler: @escaping () -> ()) {
         let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "Retry", style: .default) { _ in

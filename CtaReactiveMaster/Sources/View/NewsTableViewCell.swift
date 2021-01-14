@@ -32,13 +32,17 @@ final class NewsTableViewCell: UITableViewCell {
     }
     
     func configure(with article: Article) {
+       
         titleLabel.text = article.title
     
         if let date = article.publishedAt {
             let formatter: DateFormatter = DateFormatter()
             formatter.dateFormat = "yyyy年 MM月dd日  HH時mm分"
             publishedAtLabel.text = formatter.string(from: date)
-            if let url = URL(string: article.urlToImage ?? "") { setImage(with: url) }
+        }
+        if let url = URL(string: article.urlToImage ?? "") {
+            setImage(with: url)
         }
     }
+    
 }
