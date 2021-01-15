@@ -40,7 +40,7 @@ final class NewsTableViewCell: UITableViewCell {
             formatter.dateFormat = "yyyy年 MM月dd日  HH時mm分"
             publishedAtLabel.text = formatter.string(from: date)
         }
-        if let url = URL(string: article.urlToImage ?? "") {
+        if let urlString = article.urlToImage, let url = URL(string: urlString) {
             setImage(with: url)
         }
     }
