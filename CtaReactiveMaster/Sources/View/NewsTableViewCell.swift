@@ -35,10 +35,10 @@ final class NewsTableViewCell: UITableViewCell {
        
         titleLabel.text = article.title
     
-        if let date = article.publishedAt {
+        if let publishedAt = article.publishedAt {
             let formatter: DateFormatter = DateFormatter()
             formatter.dateFormat = "yyyy年 MM月dd日  HH時mm分"
-            publishedAtLabel.text = formatter.string(from: date)
+            publishedAtLabel.text = formatter.string(from: publishedAt)
         }
         if let urlString = article.urlToImage, let url = URL(string: urlString) {
             setImage(with: url)

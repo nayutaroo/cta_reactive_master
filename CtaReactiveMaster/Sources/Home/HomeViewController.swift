@@ -39,7 +39,7 @@ final class HomeViewController: UIViewController {
     
     private func fetchNewsAPI(){
         
-        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-14&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
+        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-15&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
         
             guard let self = self else {return}
 
@@ -53,21 +53,19 @@ final class HomeViewController: UIViewController {
                         jsonDecoder.dateDecodingStrategy = .iso8601
                         let news = try jsonDecoder.decode(News.self, from: data)
                         self.articles = news.articles
+                        self.tableView.reloadData()
                     }
                     catch let error{
                         print(error)
                         self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                        self.AfterFetch()
+                        self.afterFetch()
                         return
                     }
-                    self.tableView.reloadData()
-                    
                 case .failure(let error):
-                    //selfをあらかじめアンラップすることによりfetchnewsAPI → ?? () -> ()を使用することがない状態に
                     self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
                     print(error)
             }
-            self.AfterFetch()
+            self.afterFetch()
         }
     }
     
