@@ -45,7 +45,7 @@ final class HomeViewController: UIViewController {
 
             switch response.result {
                 case .success(let data):
-                    guard let data = data else{ return }
+                    guard let data = data else { return }
                     
                     do{
                         //APIのデータに従った構造体を書く → 取得するJSONのデータに合わせた構造体jsonDataを定義
