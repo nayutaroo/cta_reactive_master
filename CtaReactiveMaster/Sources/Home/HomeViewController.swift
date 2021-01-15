@@ -66,9 +66,6 @@ final class HomeViewController: UIViewController {
                     //selfをあらかじめアンラップすることによりfetchnewsAPI → ?? () -> ()を使用することがない状態に
                     self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
                     print(error)
-                    
-                    
-
             }
             self.AfterFetch()
         }
