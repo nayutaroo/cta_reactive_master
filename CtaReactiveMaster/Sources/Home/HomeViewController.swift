@@ -71,7 +71,7 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func AfterFetch(){
+    private func afterFetch(){
         self.activityIndicator.stopAnimating()
         let isRefreshing = self.tableView.refreshControl?.isRefreshing ?? false
         if isRefreshing {
