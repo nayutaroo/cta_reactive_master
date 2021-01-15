@@ -94,7 +94,9 @@ final class HomeViewController: UIViewController {
 extension HomeViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let url = URL(string:articles[indexPath.row].url ?? "") else { return }
-        present(SFSafariViewController(url: url), animated: true)
+        if let urlString = articles[indexPath.row].url, let url = URL(string: urlString) {
+            present(SFSafariViewController(url: url), animated: true)
+        }
     }
 }
 
