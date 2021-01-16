@@ -7,6 +7,7 @@ project.xcworkspace
 *.xcworkspace/xcuserdata/*
 xcuserdata
 /Pods/*
+/DerivedData
 
 # Bundler
 .bundle/
