@@ -39,7 +39,7 @@ final class HomeViewController: UIViewController {
     
     private func fetchNewsAPI(){
         
-        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-15&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
+        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-16&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
         
             guard let self = self else {return}
 
