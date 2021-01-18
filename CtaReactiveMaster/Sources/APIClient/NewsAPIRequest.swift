@@ -8,12 +8,12 @@
 import Foundation
 
 //NewsAPIのエンドポイントのパス
-enum Endpoint{
-    case topHeadlines
-    case everything
-    case sources
+enum Endpoint {
+    case topHeadlines(Country, Category)
+    case everything(Language)
+    case sources(Country, Language, Category)
     
-    func endPoint() -> String{
+    func path() -> String{
         switch self {
         case .topHeadlines:
             return "/v2/top-headlines"
@@ -39,7 +39,7 @@ enum Key {
         
         //object() -> String? -> String (as? は文字列以外でとった時用？)
         guard let value = plist?.object(forKey: "NewsAPIKey") as? String else {
-            fatalError("Couldn't find key 'newsAPIKey' in 'Key.plist'")
+            fatalError("Couldn't find key 'NewsAPIKey' in 'Key.plist'")
         }
         return value
     }
@@ -47,26 +47,44 @@ enum Key {
 
 
 // APIClientのリクエストのジェネリックがRequestableを採用しているのでこちらにも記述
-struct NewsAPIRequest : Requestable{
+struct NewsAPIRequest : Requestable {
     typealias Response = News
     var endpoint: Endpoint
     var url: URL {
         var baseURL = URLComponents(string: "https://newsapi.org")
-        baseURL?.path = endpoint.endPoint()
+        baseURL?.path = endpoint.path()
         
-        baseURL?.queryItems = [
-            // カテゴリーを絞ると結果が0個になる可能性があるので指定しない
-            //            URLQueryItem(name: "category", value: "business"),
-            URLQueryItem(name: "country", value: "us"),
-            URLQueryItem(name: "apiKey", value: Key.newsApi)
-        ]
+        switch endpoint{
+        //case文にletをつけると .~(この中の変数を仮引数のように宣言できる)
+        case let .topHeadlines(country, category):
+            baseURL?.queryItems = [
+                URLQueryItem(name: "country", value: country.rawValue),
+                URLQueryItem(name: "category", value: category.rawValue),
+                URLQueryItem(name: "apiKey", value: Key.newsApi)
+            ]
+            
+        case let .everything(language):
+            baseURL?.queryItems = [
+                URLQueryItem(name: "language", value: language.rawValue),
+                URLQueryItem(name: "apiKey", value: Key.newsApi)
+            ]
+            
+        case let .sources(country, language, category):
+            baseURL?.queryItems = [
+                URLQueryItem(name: "country", value: country.rawValue),
+                URLQueryItem(name: "language", value: language.rawValue),
+                URLQueryItem(name: "category", value: category.rawValue),
+                URLQueryItem(name: "apiKey", value: Key.newsApi)
+            ]
+        }
+        
         guard let url = baseURL?.url else { fatalError("can't make url") }
         return url
     }
 }
 
 //NewsAPIErrorの設定
-enum NewsAPIError: Error{
+enum NewsAPIError: Error {
     case decode(Error)
     case unknown(Error)
     case noResponse

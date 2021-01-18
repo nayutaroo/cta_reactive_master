@@ -74,9 +74,9 @@ final class HomeViewController: UIViewController {
         if activityIndicator.isAnimating {
             activityIndicator.stopAnimating()
         }
-        let isRefreshing = self.tableView.refreshControl?.isRefreshing ?? false
+        let isRefreshing = tableView.refreshControl?.isRefreshing ?? false
         if isRefreshing {
-            self.tableView.refreshControl?.endRefreshing()
+            tableView.refreshControl?.endRefreshing()
         }
     }
     
