@@ -8,6 +8,7 @@ project.xcworkspace
 xcuserdata
 /Pods/*
 /DerivedData
+/CtaReactiveMaster/Resources/Key.plist
 
 # Bundler
 .bundle/

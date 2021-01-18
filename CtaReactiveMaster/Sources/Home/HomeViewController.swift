@@ -20,7 +20,9 @@ final class HomeViewController: UIViewController {
     }
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+   
     private var articles:[Article] = []
+    private let repository = NewsRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,39 +40,40 @@ final class HomeViewController: UIViewController {
     }
     
     private func fetchNewsAPI(){
-        
-        AF.request("http://newsapi.org/v2/everything?q=bitcoin&from=2020-12-16&sortBy=publishedAt&apiKey=67945148525042b9b63954def7a50c38").response { [weak self] response in
-        
+        //この時点ではresultの内容はわかっていないが奥深くにあるrequestメソッドでこのクロージャを使う際にそのrequestメソッドで引数を設定できる。
+        // 疑問: なぜここでクロージャを設定する必要がある？？
+        // ⇨ 別のリクエストをフェッチする際にクロージャの内容を変更できるようにするため
+        repository.fetch { [weak self] result in
             guard let self = self else {return}
-
-            switch response.result {
-                case .success(let data):
-                    guard let data = data else { return }
-                    
-                    do{
-                        //APIのデータに従った構造体を書く → 取得するJSONのデータに合わせた構造体jsonDataを定義
-                        let jsonDecoder = JSONDecoder()
-                        jsonDecoder.dateDecodingStrategy = .iso8601
-                        let news = try jsonDecoder.decode(News.self, from: data)
-                        self.articles = news.articles
-                        self.tableView.reloadData()
-                    }
-                    catch let error{
-                        print(error)
-                        self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                        self.afterFetch()
-                        return
-                    }
-                case .failure(let error):
+            switch result{
+            case .success(let model):
+                self.articles = model.articles
+                DispatchQueue.main.async{
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                switch error{
+                case let .decode(error):
+                    //デコードエラー
+                    print("Decode Error")
                     self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                    print(error)
+                case let .unknown(error):
+                    //通信が繋がっていない際のエラー
+                    print("Unknown Error")
+                    self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
+                case .noResponse:
+                    //レスポンスがない場合のエラー
+                    print("No Response Error")
+                }
             }
             self.afterFetch()
         }
     }
     
     private func afterFetch(){
-        self.activityIndicator.stopAnimating()
+        if activityIndicator.isAnimating {
+            activityIndicator.stopAnimating()
+        }
         let isRefreshing = self.tableView.refreshControl?.isRefreshing ?? false
         if isRefreshing {
             self.tableView.refreshControl?.endRefreshing()
@@ -93,7 +96,6 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = URL(string:articles[indexPath.row].url ?? "") else { return }
         if let urlString = articles[indexPath.row].url, let url = URL(string: urlString) {
             present(SFSafariViewController(url: url), animated: true)
         }
