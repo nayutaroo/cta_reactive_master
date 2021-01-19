@@ -22,7 +22,17 @@ final class HomeViewController: UIViewController {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
    
     private var articles:[Article] = []
-    private let repository = NewsRepository()
+    private let repository : NewsRepository
+    
+    // Dependency Injection ( オブジェクトの注入 ）
+    init(repository: NewsRepository){
+        self.repository = repository
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -51,35 +51,34 @@ struct NewsAPIRequest : Requestable {
     typealias Response = News
     var endpoint: Endpoint
     var url: URL {
-        var baseURL = URLComponents(string: "https://newsapi.org")
-        baseURL?.path = endpoint.path()
+        var baseURL = URLComponents(string: "https://newsapi.org")!
+        baseURL.path = endpoint.path()
         
         switch endpoint{
         //case文にletをつけると .~(この中の変数を仮引数のように宣言できる)
         case let .topHeadlines(country, category):
-            baseURL?.queryItems = [
+            baseURL.queryItems = [
                 URLQueryItem(name: "country", value: country.rawValue),
                 URLQueryItem(name: "category", value: category.rawValue),
                 URLQueryItem(name: "apiKey", value: Key.newsApi)
             ]
             
         case let .everything(language):
-            baseURL?.queryItems = [
+            baseURL.queryItems = [
                 URLQueryItem(name: "language", value: language.rawValue),
                 URLQueryItem(name: "apiKey", value: Key.newsApi)
             ]
             
         case let .sources(country, language, category):
-            baseURL?.queryItems = [
+            baseURL.queryItems = [
                 URLQueryItem(name: "country", value: country.rawValue),
                 URLQueryItem(name: "language", value: language.rawValue),
                 URLQueryItem(name: "category", value: category.rawValue),
                 URLQueryItem(name: "apiKey", value: Key.newsApi)
             ]
         }
-        
-        guard let url = baseURL?.url else { fatalError("can't make url") }
-        return url
+        return baseURL.url!
+
     }
 }
 
