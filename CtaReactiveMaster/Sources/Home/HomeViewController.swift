@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
     private let repository : NewsRepository
     
     // Dependency Injection ( オブジェクトの注入 ）
-    init(repository: NewsRepository){
+    init(repository: NewsRepository) {
         self.repository = repository
         super.init(nibName: nil, bundle: nil)
     }
@@ -80,7 +80,7 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func afterFetch(){
+    private func afterFetch() {
         if activityIndicator.isAnimating {
             activityIndicator.stopAnimating()
         }

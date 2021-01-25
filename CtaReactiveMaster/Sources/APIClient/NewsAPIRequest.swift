@@ -13,7 +13,7 @@ enum Endpoint {
     case everything(Language)
     case sources(Country, Language, Category)
     
-    func path() -> String{
+    func path() -> String {
         switch self {
         case .topHeadlines:
             return "/v2/top-headlines"
@@ -29,7 +29,7 @@ enum Endpoint {
 enum Key {
     static var newsApi: String {
         //プロジェクト内のKey.plistのパスを取得
-        guard let filePath = Bundle.main.path(forResource: "Key", ofType: "plist")  else{
+        guard let filePath = Bundle.main.path(forResource: "Key", ofType: "plist")  else {
             //returnで返さずとも処理を停止させられる
             fatalError("can't get filepath")
         }
@@ -49,7 +49,7 @@ enum Key {
 // APIClientのリクエストのジェネリックがRequestableを採用しているのでこちらにも記述
 struct NewsAPIRequest : Requestable {
     typealias Response = News
-    var endpoint: Endpoint
+    let endpoint: Endpoint
     var url: URL {
         var baseURL = URLComponents(string: "https://newsapi.org")!
         baseURL.path = endpoint.path()
