@@ -5,8 +5,6 @@
 //  Created by 化田晃平 on R 3/01/18.
 //
 
-import Foundation
-
 enum Language: String {
     case ar
     case de
