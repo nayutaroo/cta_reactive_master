@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 protocol Requestable {
 //    associatedtype
 //    protocolにおけるジェネリック

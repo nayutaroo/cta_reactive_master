@@ -8,6 +8,8 @@
 import UIKit
 import Alamofire
 import SafariServices
+import RxSwift
+import RxCocoa
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!{
@@ -23,6 +25,7 @@ final class HomeViewController: UIViewController {
    
     private var articles:[Article] = []
     private let repository : NewsRepository
+    private let disposeBag = DisposeBag()
     
     // Dependency Injection ( オブジェクトの注入 ）
     init(repository: NewsRepository) {
@@ -43,16 +46,19 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = UIColor.brown
         
         activityIndicator.hidesWhenStopped = true
-        tableView.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+//        tableView.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        tableView.refreshControl?.rx.controlEvent(.valueChanged)
+            .subscribe(
+                onNext:{ [weak self] in
+                    self?.fetchNewsAPI()
+                })
+            .disposed(by: disposeBag)
        
         activityIndicator.startAnimating()
         fetchNewsAPI()
     }
     
     private func fetchNewsAPI(){
-        //この時点ではresultの内容はわかっていないが奥深くにあるrequestメソッドでこのクロージャを使う際にそのrequestメソッドで引数を設定できる。
-        // 疑問: なぜここでクロージャを設定する必要がある？？
-        // ⇨ 別のリクエストをフェッチする際にクロージャの内容を変更できるようにするため
         repository.fetch { [weak self] result in
             guard let self = self else {return}
             switch result{
@@ -99,9 +105,9 @@ final class HomeViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @objc func refresh(sender: UIRefreshControl){
-        fetchNewsAPI()
-    }
+//    @objc func refresh(sender: UIRefreshControl){
+//        fetchNewsAPI()
+//    }
 }
 
 extension HomeViewController : UITableViewDelegate{
