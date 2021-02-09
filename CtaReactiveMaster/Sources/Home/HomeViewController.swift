@@ -27,6 +27,9 @@ final class HomeViewController: UIViewController {
     private let repository : NewsRepository
     private let disposeBag = DisposeBag()
     
+    private let label = UILabel()
+    
+    
     // Dependency Injection ( オブジェクトの注入 ）
     init(repository: NewsRepository) {
         self.repository = repository
@@ -56,6 +59,7 @@ final class HomeViewController: UIViewController {
        
         activityIndicator.startAnimating()
         fetchNewsAPI()
+        
     }
     
     private func fetchNewsAPI(){
