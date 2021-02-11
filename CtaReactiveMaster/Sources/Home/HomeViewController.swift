@@ -6,14 +6,13 @@
 //
 
 import UIKit
-import Alamofire
 import SafariServices
 import RxSwift
 import RxCocoa
 
 final class HomeViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView!{
-        didSet{
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
             tableView.dataSource = self
             tableView.delegate = self
             tableView.register(NewsTableViewCell.nib, forCellReuseIdentifier: NewsTableViewCell.identifier)
@@ -22,7 +21,7 @@ final class HomeViewController: UIViewController {
     }
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    private var articles:[Article] = []
+    private var articles: [Article] = []
     private let repository : NewsRepository
     private let disposeBag = DisposeBag()
     
@@ -47,7 +46,7 @@ final class HomeViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .subscribe(
-                onNext:{ [weak self] in
+                onNext: { [weak self] in
                     self?.fetchNewsAPI()
                 })
             .disposed(by: disposeBag)
@@ -55,7 +54,7 @@ final class HomeViewController: UIViewController {
         fetchNewsAPI()
     }
     
-    private func fetchNewsAPI(){
+    private func fetchNewsAPI() {
         
         repository.fetch()
             .subscribe(on: SerialDispatchQueueScheduler(qos: .background))
@@ -102,15 +101,16 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController : UITableViewDelegate{
+extension HomeViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let urlString = articles[indexPath.row].url, let url = URL(string: urlString) {
-            present(SFSafariViewController(url: url), animated: true)
+        guard let urlString = articles[indexPath.row].url, let url = URL(string: urlString) else {
+            return
         }
+        present(SFSafariViewController(url: url), animated: true)
     }
 }
 
-extension HomeViewController : UITableViewDataSource{
+extension HomeViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         articles.count
     }

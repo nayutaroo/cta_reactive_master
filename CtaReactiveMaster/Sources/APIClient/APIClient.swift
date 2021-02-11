@@ -15,8 +15,8 @@ struct APIClient {
     // 加えてCompletionを流すときはMaybe, また, successを流さない場合はCompletable特性を利用する。
     func request<T: Requestable>(_ request:T) -> Single<T.Response> {
         Single<T.Response>.create(
-            subscribe:{ observer in
-                let task = URLSession.shared.dataTask(with: request.url){ (data, response, error) in
+            subscribe: { observer in
+                let task = URLSession.shared.dataTask(with: request.url) { (data, response, error) in
                     if let error = error {
                         observer(.failure(NewsAPIError.unknown(error)))
                     }
