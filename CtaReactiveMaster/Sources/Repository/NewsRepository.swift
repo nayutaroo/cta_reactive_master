@@ -6,19 +6,21 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol Repository {
     associatedtype Response
     var apiClient: APIClient { get }
-    func fetch(completion: @escaping (Result<Response, NewsAPIError>) -> Void)
+    func fetch() -> Single<News>
 }
 
 struct NewsRepository: Repository {
     typealias Response = News
     
     let apiClient = APIClient(decoder: .iso8601)
-    func fetch(completion: @escaping (Result<Response, NewsAPIError>) -> Void){
+    
+    func fetch() -> Single<News> {
         let request = NewsAPIRequest(endpoint: .topHeadlines(.us, .technology))
-        apiClient.request(request, completion: completion)
+        return apiClient.request(request)
     }
 }

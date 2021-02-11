@@ -22,13 +22,9 @@ final class HomeViewController: UIViewController {
     }
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-   
     private var articles:[Article] = []
     private let repository : NewsRepository
     private let disposeBag = DisposeBag()
-    
-    private let label = UILabel()
-    
     
     // Dependency Injection ( オブジェクトの注入 ）
     init(repository: NewsRepository) {
@@ -49,45 +45,41 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = UIColor.brown
         
         activityIndicator.hidesWhenStopped = true
-//        tableView.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .subscribe(
                 onNext:{ [weak self] in
                     self?.fetchNewsAPI()
                 })
             .disposed(by: disposeBag)
-       
         activityIndicator.startAnimating()
         fetchNewsAPI()
-        
     }
     
     private func fetchNewsAPI(){
-        repository.fetch { [weak self] result in
-            guard let self = self else {return}
-            switch result{
-            case .success(let model):
-                self.articles = model.articles
-                DispatchQueue.main.async{
+        
+        repository.fetch()
+            .subscribe(on: SerialDispatchQueueScheduler(qos: .background))
+            .observe(on: MainScheduler.instance)
+            .subscribe(
+                onSuccess: { model in
+                    self.articles = model.articles
                     self.tableView.reloadData()
-                }
-            case .failure(let error):
-                switch error{
-                case let .decode(error):
-                    //デコードエラー
-                    print("Decode Error")
-                    self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                case let .unknown(error):
-                    //通信が繋がっていない際のエラー
-                    print("Unknown Error")
-                    self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                case .noResponse:
-                    //レスポンスがない場合のエラー
-                    print("No Response Error")
-                }
-            }
-            self.afterFetch()
-        }
+                    self.afterFetch()
+                },
+                onFailure: { error in
+                    if let error = error as? NewsAPIError {
+                        switch error{
+                        case let .decode(error):
+                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
+                        case let .unknown(error):
+                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
+                        case .noResponse:
+                            //レスポンスがない場合のエラー
+                            print("No Response Error")
+                        }
+                    }
+                })
+            .disposed(by: disposeBag)
     }
     
     private func afterFetch() {
@@ -108,10 +100,6 @@ final class HomeViewController: UIViewController {
         })
         present(alertController, animated: true, completion: nil)
     }
-    
-//    @objc func refresh(sender: UIRefreshControl){
-//        fetchNewsAPI()
-//    }
 }
 
 extension HomeViewController : UITableViewDelegate{
