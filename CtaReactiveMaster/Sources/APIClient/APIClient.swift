@@ -24,7 +24,7 @@ struct APIClient {
                     let model = try decoder.decode(T.Response.self, from: data)
                     completion(.success(model))
                 }
-                catch let error{
+                catch let error {
                     completion(.failure(NewsAPIError.decode(error)))
                 }
                 
