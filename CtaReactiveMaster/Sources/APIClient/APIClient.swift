@@ -10,7 +10,7 @@ import Alamofire
 
 struct APIClient {
     let decoder : JSONDecoder
-    func request<T: Requestable>(_ request:T, completion: @escaping (Result<T.Response, NewsAPIError>) -> Void){
+    func request<T: Requestable>(_ request:T, completion: @escaping (Result<T.Response, NewsAPIError>) -> Void) {
         AF.request(request.url).response { response in
             
             switch response.result {
