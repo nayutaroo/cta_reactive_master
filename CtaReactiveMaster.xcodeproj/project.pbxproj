@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		82796DF02569247500443E2F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82796DEE2569247500443E2F /* HomeViewController.xib */; };
+		D711C14D25F24CA400557BDD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C14C25F24CA400557BDD /* HomeViewModel.swift */; };
 		D71C2B7B25A5426B00AE29EE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */; };
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
@@ -51,6 +52,7 @@
 		82F66DCE1A668CAA1224DAFF /* Pods-CtaReactiveMaster-CtaReactiveMasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CtaReactiveMaster-CtaReactiveMasterUITests.debug.xcconfig"; path = "Target Support Files/Pods-CtaReactiveMaster-CtaReactiveMasterUITests/Pods-CtaReactiveMaster-CtaReactiveMasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9809336D5959AFBA85CE0F49 /* Pods-CtaReactiveMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CtaReactiveMaster.release.xcconfig"; path = "Target Support Files/Pods-CtaReactiveMaster/Pods-CtaReactiveMaster.release.xcconfig"; sourceTree = "<group>"; };
 		B9F141820D3B6ADF8624D76B /* Pods-CtaReactiveMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CtaReactiveMaster.debug.xcconfig"; path = "Target Support Files/Pods-CtaReactiveMaster/Pods-CtaReactiveMaster.debug.xcconfig"; sourceTree = "<group>"; };
+		D711C14C25F24CA400557BDD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
@@ -111,10 +113,9 @@
 				D7F2C4A225B5759200083499 /* Entities */,
 				D794062525B2BCC5006B8444 /* Repository */,
 				D794061B25B2B419006B8444 /* APIClient */,
-				D71C2BB125A7EF5000AE29EE /* View */,
 				D71C2BB025A7EF1500AE29EE /* Extension */,
 				D71C2BA925A7EE3400AE29EE /* Model */,
-				82796E132569354A00443E2F /* Home */,
+				D711C15025F24D2E00557BDD /* Views */,
 				D848D49D2568190F008CA221 /* SceneDelegate.swift */,
 				D848D49B2568190F008CA221 /* AppDelegate.swift */,
 			);
@@ -137,8 +138,18 @@
 			children = (
 				82796DEE2569247500443E2F /* HomeViewController.xib */,
 				82796DED2569247500443E2F /* HomeViewController.swift */,
+				D711C14C25F24CA400557BDD /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		D711C15025F24D2E00557BDD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D71C2BB125A7EF5000AE29EE /* Cells */,
+				82796E132569354A00443E2F /* Home */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D71C2BA925A7EE3400AE29EE /* Model */ = {
@@ -157,13 +168,13 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		D71C2BB125A7EF5000AE29EE /* View */ = {
+		D71C2BB125A7EF5000AE29EE /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */,
 				D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */,
 			);
-			path = View;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		D794061B25B2B419006B8444 /* APIClient */ = {
@@ -423,6 +434,7 @@
 				D848D49E2568190F008CA221 /* SceneDelegate.swift in Sources */,
 				D7F2C4AB25B575CC00083499 /* Country.swift in Sources */,
 				D71C2B7B25A5426B00AE29EE /* NewsTableViewCell.swift in Sources */,
+				D711C14D25F24CA400557BDD /* HomeViewModel.swift in Sources */,
 				D7F2C4AF25B575DA00083499 /* Language.swift in Sources */,
 				D7F2C4B325B591C500083499 /* JSONDecoder+Extension.swift in Sources */,
 				D794062125B2B419006B8444 /* NewsAPIRequest.swift in Sources */,

@@ -78,7 +78,6 @@ struct NewsAPIRequest : Requestable {
             ]
         }
         return baseURL.url!
-
     }
 }
 
