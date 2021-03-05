@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		82796DF02569247500443E2F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82796DEE2569247500443E2F /* HomeViewController.xib */; };
 		D711C14D25F24CA400557BDD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C14C25F24CA400557BDD /* HomeViewModel.swift */; };
+		D711C15225F24EC800557BDD /* HomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15125F24EC800557BDD /* HomeViewDataSource.swift */; };
 		D71C2B7B25A5426B00AE29EE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */; };
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
@@ -53,6 +54,7 @@
 		9809336D5959AFBA85CE0F49 /* Pods-CtaReactiveMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CtaReactiveMaster.release.xcconfig"; path = "Target Support Files/Pods-CtaReactiveMaster/Pods-CtaReactiveMaster.release.xcconfig"; sourceTree = "<group>"; };
 		B9F141820D3B6ADF8624D76B /* Pods-CtaReactiveMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CtaReactiveMaster.debug.xcconfig"; path = "Target Support Files/Pods-CtaReactiveMaster/Pods-CtaReactiveMaster.debug.xcconfig"; sourceTree = "<group>"; };
 		D711C14C25F24CA400557BDD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		D711C15125F24EC800557BDD /* HomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDataSource.swift; sourceTree = "<group>"; };
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				82796DEE2569247500443E2F /* HomeViewController.xib */,
 				82796DED2569247500443E2F /* HomeViewController.swift */,
 				D711C14C25F24CA400557BDD /* HomeViewModel.swift */,
+				D711C15125F24EC800557BDD /* HomeViewDataSource.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */,
 				D7F2C4A425B575AE00083499 /* Category.swift in Sources */,
 				D794062025B2B419006B8444 /* APIClient.swift in Sources */,
+				D711C15225F24EC800557BDD /* HomeViewDataSource.swift in Sources */,
 				D848D49C2568190F008CA221 /* AppDelegate.swift in Sources */,
 				D71C2BAB25A7EE6800AE29EE /* NewsAPI.swift in Sources */,
 				D794061F25B2B419006B8444 /* Requestable.swift in Sources */,
