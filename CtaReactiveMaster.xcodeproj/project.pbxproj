@@ -10,6 +10,8 @@
 		82796DF02569247500443E2F /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82796DEE2569247500443E2F /* HomeViewController.xib */; };
 		D711C14D25F24CA400557BDD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C14C25F24CA400557BDD /* HomeViewModel.swift */; };
 		D711C15225F24EC800557BDD /* HomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15125F24EC800557BDD /* HomeViewDataSource.swift */; };
+		D711C15825F2611000557BDD /* UIRefreshControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15725F2611000557BDD /* UIRefreshControl+Extension.swift */; };
+		D711C15C25F2615100557BDD /* UIActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15B25F2615100557BDD /* UIActivityIndicatorView+Extension.swift */; };
 		D71C2B7B25A5426B00AE29EE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */; };
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
@@ -55,6 +57,8 @@
 		B9F141820D3B6ADF8624D76B /* Pods-CtaReactiveMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CtaReactiveMaster.debug.xcconfig"; path = "Target Support Files/Pods-CtaReactiveMaster/Pods-CtaReactiveMaster.debug.xcconfig"; sourceTree = "<group>"; };
 		D711C14C25F24CA400557BDD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		D711C15125F24EC800557BDD /* HomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDataSource.swift; sourceTree = "<group>"; };
+		D711C15725F2611000557BDD /* UIRefreshControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Extension.swift"; sourceTree = "<group>"; };
+		D711C15B25F2615100557BDD /* UIActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				D7F2C4B225B591C500083499 /* JSONDecoder+Extension.swift */,
+				D711C15725F2611000557BDD /* UIRefreshControl+Extension.swift */,
+				D711C15B25F2615100557BDD /* UIActivityIndicatorView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -430,6 +436,7 @@
 			files = (
 				D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */,
 				D7F2C4A425B575AE00083499 /* Category.swift in Sources */,
+				D711C15825F2611000557BDD /* UIRefreshControl+Extension.swift in Sources */,
 				D794062025B2B419006B8444 /* APIClient.swift in Sources */,
 				D711C15225F24EC800557BDD /* HomeViewDataSource.swift in Sources */,
 				D848D49C2568190F008CA221 /* AppDelegate.swift in Sources */,
@@ -440,6 +447,7 @@
 				D71C2B7B25A5426B00AE29EE /* NewsTableViewCell.swift in Sources */,
 				D711C14D25F24CA400557BDD /* HomeViewModel.swift in Sources */,
 				D7F2C4AF25B575DA00083499 /* Language.swift in Sources */,
+				D711C15C25F2615100557BDD /* UIActivityIndicatorView+Extension.swift in Sources */,
 				D7F2C4B325B591C500083499 /* JSONDecoder+Extension.swift in Sources */,
 				D794062125B2B419006B8444 /* NewsAPIRequest.swift in Sources */,
 				D794062725B2BCDD006B8444 /* NewsRepository.swift in Sources */,

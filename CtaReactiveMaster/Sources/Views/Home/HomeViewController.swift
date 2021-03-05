@@ -20,16 +20,17 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     private var articles: [Article] = []
-    private let repository : NewsRepository
     private let disposeBag = DisposeBag()
+    private let viewModel: HomeViewModelProtocol
     
-    // Dependency Injection ( オブジェクトの注入 ）
-    init(repository: NewsRepository) {
-        self.repository = repository
+    init(viewModel: HomeViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -56,29 +57,29 @@ final class HomeViewController: UIViewController {
     
     private func fetchNewsAPI() {
         
-        repository.fetch()
-            .subscribe(on: SerialDispatchQueueScheduler(qos: .background))
-            .observe(on: MainScheduler.instance)
-            .subscribe(
-                onSuccess: { model in
-                    self.articles = model.articles
-                    self.tableView.reloadData()
-                    self.afterFetch()
-                },
-                onFailure: { error in
-                    if let error = error as? NewsAPIError {
-                        switch error{
-                        case let .decode(error):
-                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                        case let .unknown(error):
-                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-                        case .noResponse:
-                            //レスポンスがない場合のエラー
-                            print("No Response Error")
-                        }
-                    }
-                })
-            .disposed(by: disposeBag)
+//        repository.fetch()
+//            .subscribe(on: SerialDispatchQueueScheduler(qos: .background))
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(
+//                onSuccess: { model in
+//                    self.articles = model.articles
+//                    self.tableView.reloadData()
+//                    self.afterFetch()
+//                },
+//                onFailure: { error in
+//                    if let error = error as? NewsAPIError {
+//                        switch error{
+//                        case let .decode(error):
+//                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
+//                        case let .unknown(error):
+//                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
+//                        case .noResponse:
+//                            //レスポンスがない場合のエラー
+//                            print("No Response Error")
+//                        }
+//                    }
+//                })
+//            .disposed(by: disposeBag)
     }
     
     private func afterFetch() {
