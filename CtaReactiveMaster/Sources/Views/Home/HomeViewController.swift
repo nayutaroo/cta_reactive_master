@@ -40,11 +40,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "NewsAPI"
-        navigationController?.navigationBar.titleTextAttributes
-            = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!]
-        navigationController?.navigationBar.backgroundColor = UIColor.brown
+        viewSetup()
         
         viewModel.input.viewDidLoad()
         
@@ -107,5 +103,12 @@ final class HomeViewController: UIViewController {
                 me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func viewSetup() {
+        navigationItem.title = "NewsAPI"
+        navigationController?.navigationBar.titleTextAttributes
+            = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!]
+        navigationController?.navigationBar.backgroundColor = UIColor.brown
     }
 }
