@@ -21,7 +21,7 @@ protocol HomeViewModelInputs {
 
 protocol HomeViewModelOutputs {
     var articles: Driver<[Article]> { get }
-    var loadingStatus: Observable<LoadingStatus> { get }
+    var loadingStatus: Driver<LoadingStatus> { get }
 }
 
 final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewModelOutputs {
@@ -39,13 +39,13 @@ final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewM
     var output: HomeViewModelOutputs { self }
     
     var articles: Driver<[Article]>
-    var loadingStatus: Observable<LoadingStatus>
+    var loadingStatus: Driver<LoadingStatus>
     
     init(repository: NewsRepository = .init()) {
         
         self.repository = repository
         self.articles = articlesRelay.asDriver()
-        self.loadingStatus = loadingStatusRelay.asObservable()
+        self.loadingStatus = loadingStatusRelay.asDriver()
             
         Observable.merge(viewDidLoadRelay.asObservable(), retryFetchRelay.asObservable())
             .map { LoadingStatus.isLoading }

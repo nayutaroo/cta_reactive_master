@@ -65,7 +65,7 @@ final class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.output.loadingStatus
+        viewModel.output.loadingStatus.asObservable()
             .flatMap { status -> Observable<Void> in
                 switch status {
                 case .initial, .loadSuccess:
@@ -77,7 +77,7 @@ final class HomeViewController: UIViewController {
             .bind(to: activityIndicator.rx.stopAnimazing, refreshControl.rx.endRefreshing)
             .disposed(by: disposeBag)
         
-        viewModel.output.loadingStatus
+        viewModel.output.loadingStatus.asObservable()
             .flatMap { status -> Observable<Void> in
                 switch status {
                 case .isLoading:
@@ -89,7 +89,7 @@ final class HomeViewController: UIViewController {
             .bind(to: activityIndicator.rx.startAnimazing)
             .disposed(by: disposeBag)
         
-        viewModel.output.loadingStatus
+        viewModel.output.loadingStatus.asObservable()
             .flatMap { status -> Observable<Error> in
                 switch status {
                 case .loadFailed(let error):
@@ -98,7 +98,6 @@ final class HomeViewController: UIViewController {
                     return .empty()
                 }
             }
-            .subscribe(on: MainScheduler.instance)
             .subscribe(Binder(self) { me, error in
                 me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
             })
