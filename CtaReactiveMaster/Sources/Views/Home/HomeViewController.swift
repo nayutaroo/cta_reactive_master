@@ -13,24 +13,26 @@ import RxCocoa
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
-            tableView.dataSource = self
-            tableView.delegate = self
             tableView.register(NewsTableViewCell.nib, forCellReuseIdentifier: NewsTableViewCell.identifier)
-            tableView.refreshControl = UIRefreshControl()
+            tableView.refreshControl = refreshControl
         }
     }
     
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView! {
+        didSet {
+            activityIndicator.hidesWhenStopped = true
+        }
+    }
     
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     private var articles: [Article] = []
     private let disposeBag = DisposeBag()
     private let viewModel: HomeViewModelProtocol
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -44,82 +46,66 @@ final class HomeViewController: UIViewController {
             = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!]
         navigationController?.navigationBar.backgroundColor = UIColor.brown
         
-        activityIndicator.hidesWhenStopped = true
-        tableView.refreshControl?.rx.controlEvent(.valueChanged)
-            .subscribe(
-                onNext: { [weak self] in
-                    self?.fetchNewsAPI()
-                })
-            .disposed(by: disposeBag)
-        activityIndicator.startAnimating()
-        fetchNewsAPI()
-    }
-    
-    private func fetchNewsAPI() {
+        viewModel.input.viewDidLoad()
         
-//        repository.fetch()
-//            .subscribe(on: SerialDispatchQueueScheduler(qos: .background))
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(
-//                onSuccess: { model in
-//                    self.articles = model.articles
-//                    self.tableView.reloadData()
-//                    self.afterFetch()
-//                },
-//                onFailure: { error in
-//                    if let error = error as? NewsAPIError {
-//                        switch error{
-//                        case let .decode(error):
-//                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-//                        case let .unknown(error):
-//                            self.showRetryAlert(with: error, retryhandler: self.fetchNewsAPI)
-//                        case .noResponse:
-//                            //レスポンスがない場合のエラー
-//                            print("No Response Error")
-//                        }
-//                    }
-//                })
-//            .disposed(by: disposeBag)
-    }
-    
-    private func afterFetch() {
-        if activityIndicator.isAnimating {
-            activityIndicator.stopAnimating()
-        }
-        let isRefreshing = tableView.refreshControl?.isRefreshing ?? false
-        if isRefreshing {
-            tableView.refreshControl?.endRefreshing()
-        }
-    }
-    
-    private func showRetryAlert(with error: Error, retryhandler: @escaping () -> ()) {
-        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Retry", style: .default) { _ in
-            retryhandler()
-        })
-        present(alertController, animated: true, completion: nil)
-    }
-}
-
-extension HomeViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let urlString = articles[indexPath.row].url, let url = URL(string: urlString) else {
-            return
-        }
-        present(SFSafariViewController(url: url), animated: true)
-    }
-}
-
-extension HomeViewController : UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        articles.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.identifier) as! NewsTableViewCell
-        let article = articles[indexPath.row]
-        cell.configure(with: article)
-        return cell
+        tableView.refreshControl?.rx.controlEvent(.valueChanged)
+            .bind(to: Binder(self) { me, _ in
+                me.viewModel.input.refresh()
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(Article.self)
+            .bind(to: Binder(self) { me, article in
+                guard let urlString = article.url, let url = URL(string: urlString) else {
+                    return
+                }
+                me.present(SFSafariViewController(url: url), animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.output.articles.asObservable()
+            .bind(to: tableView.rx.items(cellIdentifier: NewsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { _, article, cell in
+                cell.configure(with: article)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.output.loadingStatus
+            .flatMap { status -> Observable<Void> in
+                switch status {
+                case .initial, .loadSuccess:
+                    return Observable.just(())
+                default:
+                    return .empty()
+                }
+            }
+            .bind(to: activityIndicator.rx.stopAnimazing, refreshControl.rx.endRefreshing)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.loadingStatus
+            .flatMap { status -> Observable<Void> in
+                switch status {
+                case .isLoading:
+                    return Observable.just(())
+                default:
+                    return .empty()
+                }
+            }
+            .bind(to: activityIndicator.rx.startAnimazing)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.loadingStatus
+            .flatMap { status -> Observable<Error> in
+                switch status {
+                case .loadFailed(let error):
+                    return Observable.just(error)
+                default:
+                    return .empty()
+                }
+            }
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(Binder(self) { me, error in
+                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
+            })
+            .disposed(by: disposeBag)
     }
 }

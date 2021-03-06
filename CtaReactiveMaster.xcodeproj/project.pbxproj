@@ -12,6 +12,7 @@
 		D711C15225F24EC800557BDD /* HomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15125F24EC800557BDD /* HomeViewDataSource.swift */; };
 		D711C15825F2611000557BDD /* UIRefreshControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15725F2611000557BDD /* UIRefreshControl+Extension.swift */; };
 		D711C15C25F2615100557BDD /* UIActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C15B25F2615100557BDD /* UIActivityIndicatorView+Extension.swift */; };
+		D711C16225F2F6D600557BDD /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D711C16125F2F6D500557BDD /* UIViewController+Extension.swift */; };
 		D71C2B7B25A5426B00AE29EE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */; };
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
@@ -59,6 +60,7 @@
 		D711C15125F24EC800557BDD /* HomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDataSource.swift; sourceTree = "<group>"; };
 		D711C15725F2611000557BDD /* UIRefreshControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Extension.swift"; sourceTree = "<group>"; };
 		D711C15B25F2615100557BDD /* UIActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
+		D711C16125F2F6D500557BDD /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				D7F2C4B225B591C500083499 /* JSONDecoder+Extension.swift */,
 				D711C15725F2611000557BDD /* UIRefreshControl+Extension.swift */,
 				D711C15B25F2615100557BDD /* UIActivityIndicatorView+Extension.swift */,
+				D711C16125F2F6D500557BDD /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D711C16225F2F6D600557BDD /* UIViewController+Extension.swift in Sources */,
 				D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */,
 				D7F2C4A425B575AE00083499 /* Category.swift in Sources */,
 				D711C15825F2611000557BDD /* UIRefreshControl+Extension.swift in Sources */,

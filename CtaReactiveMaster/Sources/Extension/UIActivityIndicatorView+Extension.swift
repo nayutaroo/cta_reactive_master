@@ -10,13 +10,13 @@ import RxCocoa
 
 extension Reactive where Base: UIActivityIndicatorView {
     var startAnimazing: Binder<Void> {
-        Binder(self.base){ base, _ in
+        Binder(self.base) { base, _ in
             base.startAnimating()
         }
     }
     
     var stopAnimazing: Binder<Void> {
-        Binder(self.base){ base, _ in
+        Binder(self.base) { base, _ in
             if base.isAnimating {
                 base.stopAnimating()
             }
