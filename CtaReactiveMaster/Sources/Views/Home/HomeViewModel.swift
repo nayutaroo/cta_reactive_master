@@ -5,7 +5,6 @@
 //  Created by 化田晃平 on R 3/03/05.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
@@ -23,13 +22,6 @@ protocol HomeViewModelInputs {
 protocol HomeViewModelOutputs {
     var articles: Driver<[Article]> { get }
     var loadingStatus: Observable<LoadingStatus> { get }
-}
-
-enum LoadingStatus {
-    case initial
-    case isLoading
-    case loadSuccess
-    case loadFailed(Error)
 }
 
 final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewModelOutputs {
