@@ -24,7 +24,6 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private var articles: [Article] = []
     private let disposeBag = DisposeBag()
     private let viewModel: HomeViewModelProtocol
     private let refreshControl = UIRefreshControl()
@@ -65,43 +64,64 @@ final class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.output.loadingStatus.asObservable()
-            .flatMap { status -> Observable<Void> in
+//        viewModel.output.loadingStatus
+//            .flatMap { status -> Observable<Void> in
+//                switch status {
+//                case .initial, .loadSuccess:
+//                    return .just(())
+//                case .isLoading, .loadFailed:
+//                    return .empty()
+//                }
+//            }
+//            .bind(to: activityIndicator.rx.stopAnimating, refreshControl.rx.endRefreshing)
+//            .disposed(by: disposeBag)
+        
+        viewModel.output.loadingStatus
+            .subscribe(Binder(self) { me, status in
                 switch status {
                 case .initial, .loadSuccess:
-                    return Observable.just(())
-                default:
-                    return .empty()
-                }
-            }
-            .bind(to: activityIndicator.rx.stopAnimazing, refreshControl.rx.endRefreshing)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.loadingStatus.asObservable()
-            .flatMap { status -> Observable<Void> in
-                switch status {
+                    Observable.just(())
+                        .bind(to: me.activityIndicator.rx.stopAnimating, me.refreshControl.rx.endRefreshing)
+                        .disposed(by: me.disposeBag)
                 case .isLoading:
-                    return Observable.just(())
-                default:
-                    return .empty()
-                }
-            }
-            .bind(to: activityIndicator.rx.startAnimazing)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.loadingStatus.asObservable()
-            .flatMap { status -> Observable<Error> in
-                switch status {
+                    Observable.just(())
+                        .bind(to: me.activityIndicator.rx.startAnimating)
+                        .disposed(by: me.disposeBag)
                 case .loadFailed(let error):
-                    return Observable.just(error)
-                default:
-                    return .empty()
+                    Observable.just(error)
+                        .bind(to: Binder(self) { me, error in
+                            me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
+                        })
+                        .disposed(by: me.disposeBag)
                 }
-            }
-            .subscribe(Binder(self) { me, error in
-                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
             })
             .disposed(by: disposeBag)
+        
+//        viewModel.output.loadingStatus
+//            .flatMap { status -> Observable<Void> in
+//                switch status {
+//                case .isLoading:
+//                    return .just(())
+//                case .initial, .loadSuccess, .loadFailed:
+//                    return .empty()
+//                }
+//            }
+//            .bind(to: activityIndicator.rx.startAnimating)
+//            .disposed(by: disposeBag)
+//
+//        viewModel.output.loadingStatus
+//            .flatMap { status -> Observable<Error> in
+//                switch status {
+//                case .loadFailed(let error):
+//                    return .just(error)
+//                case .initial, .isLoading, .loadSuccess:
+//                    return .empty()
+//                }
+//            }
+//            .subscribe(Binder(self) { me, error in
+//                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
+//            })
+//            .disposed(by: disposeBag)
     }
     
     private func viewSetup() {
