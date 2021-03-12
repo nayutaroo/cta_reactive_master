@@ -41,8 +41,6 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         viewSetup()
         
-        viewModel.input.viewDidLoad()
-        
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .bind(to: Binder(self) { me, _ in
                 me.viewModel.input.refresh()
@@ -64,6 +62,7 @@ final class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+// TODO: 後々削除
 //        viewModel.output.loadingStatus
 //            .flatMap { status -> Observable<Void> in
 //                switch status {
@@ -83,7 +82,7 @@ final class HomeViewController: UIViewController {
                     Observable.just(())
                         .bind(to: me.activityIndicator.rx.stopAnimating, me.refreshControl.rx.endRefreshing)
                         .disposed(by: me.disposeBag)
-                case .isLoading:
+                case .loading:
                     Observable.just(())
                         .bind(to: me.activityIndicator.rx.startAnimating)
                         .disposed(by: me.disposeBag)
@@ -96,7 +95,9 @@ final class HomeViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
+   
+　
+        が// TODO: 後々削除
 //        viewModel.output.loadingStatus
 //            .flatMap { status -> Observable<Void> in
 //                switch status {
@@ -122,6 +123,8 @@ final class HomeViewController: UIViewController {
 //                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
 //            })
 //            .disposed(by: disposeBag)
+        
+        viewModel.input.viewDidLoad()
     }
     
     private func viewSetup() {

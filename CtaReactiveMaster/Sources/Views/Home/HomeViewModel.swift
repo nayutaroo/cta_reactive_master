@@ -48,30 +48,31 @@ final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewM
         self.loadingStatus = loadingStatusRelay.asDriver().asObservable()
             
         Observable.merge(viewDidLoadRelay.asObservable(), retryFetchRelay.asObservable())
-            .map { LoadingStatus.isLoading }
+            .map { LoadingStatus.loading }
             .bind(to: loadingStatusRelay)
             .disposed(by: disposeBag)
         
-        let isFetched = Observable.merge(viewDidLoadRelay.asObservable(), refreshRelay.asObservable(), retryFetchRelay.asObservable())
+        let fetchedEvent = Observable.merge(viewDidLoadRelay.asObservable(), refreshRelay.asObservable(), retryFetchRelay.asObservable())
                         .flatMap { repository.fetch().asObservable().materialize() }
                         .share()
         
-        isFetched.flatMap { $0.element.map(Observable.just) ?? .empty() }
+        fetchedEvent.flatMap { $0.element.map(Observable.just) ?? .empty() }
             .do(onNext: { [weak self] _ in
                 self?.loadingStatusRelay.accept(.loadSuccess)
             })
-            .map { $0.articles }
+            .map(\.articles)
             .bind(to: self.articlesRelay)
             .disposed(by: disposeBag)
         
-        isFetched.flatMap { $0.error.map(Observable.just) ?? .empty() }
+        fetchedEvent.flatMap { $0.error.map(Observable.just) ?? .empty() }
             .do(onNext: { [weak self] error in
                 if let error = error as? NewsAPIError {
                     switch error {
                     case let .decode(error), let .unknown(error):
                          self?.loadingStatusRelay.accept(.loadFailed(error))
                     case .noResponse:
-                       print("No Response Error")
+                        let error = NSError(domain: "サーバからの応答がありません。", code: -1, userInfo: nil)
+                        self?.loadingStatusRelay.accept(.loadFailed(error))
                     }
                 }
             })

@@ -7,7 +7,7 @@
 
 enum LoadingStatus {
     case initial
-    case isLoading
+    case loading
     case loadSuccess
     case loadFailed(Error)
 }
