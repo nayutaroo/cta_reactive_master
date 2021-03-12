@@ -96,8 +96,7 @@ final class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
    
-　
-        が// TODO: 後々削除
+// TODO: 後々削除
 //        viewModel.output.loadingStatus
 //            .flatMap { status -> Observable<Void> in
 //                switch status {
