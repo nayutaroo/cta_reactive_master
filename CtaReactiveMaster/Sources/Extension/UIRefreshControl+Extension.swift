@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import UIKit
 
 extension Reactive where Base: UIRefreshControl {
     var endRefreshing: Binder<Void> {
