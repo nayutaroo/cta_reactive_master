@@ -54,7 +54,7 @@ struct NewsAPIRequest : Requestable {
         var baseURL = URLComponents(string: "https://newsapi.org")!
         baseURL.path = endpoint.path()
         
-        switch endpoint{
+        switch endpoint {
         //case文にletをつけると .~(この中の変数を仮引数のように宣言できる)
         case let .topHeadlines(country, category):
             baseURL.queryItems = [
@@ -78,7 +78,6 @@ struct NewsAPIRequest : Requestable {
             ]
         }
         return baseURL.url!
-
     }
 }
 

@@ -6,13 +6,13 @@
 //
 import Foundation
 
-struct News: Decodable{
+struct News: Decodable {
     let status: String?
     let totalResults: Int?
     let articles: [Article]
 }
 
-struct Article: Decodable{
+struct Article: Decodable {
     let source: Source?
     let author: String?
     let title: String?
@@ -23,6 +23,6 @@ struct Article: Decodable{
     let content: String?
 }
 
-struct Source: Decodable{
+struct Source: Decodable {
     let name: String?
 }

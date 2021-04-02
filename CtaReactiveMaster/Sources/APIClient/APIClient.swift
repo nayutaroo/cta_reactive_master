@@ -6,32 +6,37 @@
 //
 
 import Foundation
-import Alamofire
+import RxSwift
 
 struct APIClient {
     let decoder : JSONDecoder
-    func request<T: Requestable>(_ request:T, completion: @escaping (Result<T.Response, NewsAPIError>) -> Void) {
-        AF.request(request.url).response { response in
-            
-            switch response.result {
-            case .success(let data):
-                guard let data = data else {
-                    completion(.failure(NewsAPIError.noResponse))
-                    return
+    
+    // 返り値にSingle型を用いるのは APIの結果を.success, .failureのいずれかで通知させたいから。
+    // 加えてCompletionを流すときはMaybe, また, successを流さない場合はCompletable特性を利用する。
+    // ちなみにエラーを返さなくても良い場合はDriver, Signal（Driverのreplayがない版）を利用する。
+    func request<T: Requestable>(_ request:T) -> Single<T.Response> {
+        Single<T.Response>.create(
+            subscribe: { observer in
+                let task = URLSession.shared.dataTask(with: request.url) { (data, response, error) in
+                    if let error = error {
+                        observer(.failure(NewsAPIError.unknown(error)))
+                    }
+                    guard let _ = response as? HTTPURLResponse, let data = data else {
+                        observer(.failure(NewsAPIError.noResponse))
+                        return
+                    }
+                    do {
+                        // Responseはstaticなので T.をつけて利用
+                        let model = try decoder.decode(T.Response.self, from: data)
+                        observer(.success(model))
+                    }
+                    catch let error {
+                        observer(.failure(NewsAPIError.decode(error)))
+                    }
                 }
-                do{
-                    // Responseはstaticなので T.をつけて利用
-                    let model = try decoder.decode(T.Response.self, from: data)
-                    completion(.success(model))
-                }
-                catch let error {
-                    completion(.failure(NewsAPIError.decode(error)))
-                }
-                
-            case .failure(let error):
-                completion(.failure(NewsAPIError.unknown(error)))
+                task.resume()
+                return Disposables.create()
             }
-            
-        }
+        )
     }
 }
