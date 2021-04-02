@@ -75,6 +75,8 @@ final class HomeViewController: UIViewController {
 //            .bind(to: activityIndicator.rx.stopAnimating, refreshControl.rx.endRefreshing)
 //            .disposed(by: disposeBag)
         
+
+        
         viewModel.output.loadingStatus
             .subscribe(Binder(self) { me, status in
                 switch status {

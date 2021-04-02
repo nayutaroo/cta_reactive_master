@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import Foundation
 
 protocol HomeViewModelProtocol {
     var input: HomeViewModelInputs { get }

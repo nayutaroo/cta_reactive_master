@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import UIKit
 
 extension Reactive where Base: UIActivityIndicatorView {
     var startAnimating: Binder<Void> {
