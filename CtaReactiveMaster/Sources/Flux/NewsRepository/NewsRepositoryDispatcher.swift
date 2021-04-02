@@ -5,4 +5,15 @@
 //  Created by 化田晃平 on R 3/04/02.
 //
 
-import Foundation
+import RxSwift
+import RxRelay
+
+final class NewsRepositoryDispatcher {
+    static let shared = NewsRepositoryDispatcher()
+
+    let articles = PublishRelay<[Article]>()
+    let loadingStatus = PublishRelay<LoadingStatus>()
+    let error = PublishRelay<Error>()
+
+    private init() {}
+}

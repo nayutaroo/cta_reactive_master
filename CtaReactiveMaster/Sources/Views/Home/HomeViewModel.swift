@@ -52,7 +52,7 @@ final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewM
             .map { LoadingStatus.loading }
             .bind(to: loadingStatusRelay)
             .disposed(by: disposeBag)
-        
+
         let fetchedEvent = Observable.merge(viewDidLoadRelay.asObservable(), refreshRelay.asObservable(), retryFetchRelay.asObservable())
                         .flatMap { repository.fetch().asObservable().materialize() }
                         .share()

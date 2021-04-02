@@ -11,3 +11,4 @@ enum LoadingStatus {
     case loadSuccess
     case loadFailed(Error)
 }
+

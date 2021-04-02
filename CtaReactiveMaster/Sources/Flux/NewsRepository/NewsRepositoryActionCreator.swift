@@ -6,6 +6,45 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
-//final class NewsRepositoryActionCreator {
-//}
+final class NewsRepositoryActionCreator {
+    static let shared = NewsRepositoryActionCreator()
+
+    private let repository: NewsRepository
+    private let dispatcher: NewsRepositoryDispatcher
+
+    private let disposeBag = DisposeBag()
+    private let fetchArticles = PublishRelay<Void>()
+
+    private init(dispatcher: NewsRepositoryDispatcher = .shared,
+                 repository: NewsRepository = .init()) {
+        self.dispatcher = dispatcher
+        self.repository = repository
+
+        let fetchedEvent = fetchArticles
+            .flatMap {
+                repository.fetch().asObservable().materialize()
+            }
+            .share()
+
+        fetchedEvent.flatMap { $0.element.map(Observable.just) ?? .empty() }
+            .map(\.articles)
+            .bind(to: dispatcher.articles)
+            .disposed(by: disposeBag)
+
+        fetchedEvent.flatMap { $0.error.map(Observable.just) ?? .empty() }
+            .bind(to: dispatcher.error)
+            .disposed(by: disposeBag)
+
+        Observable.merge(fetchArticles.map { _ in LoadingStatus.loading },
+                         fetchedEvent.map { _ in LoadingStatus.initial })
+            .bind(to: dispatcher.loadingStatus)
+            .disposed(by: disposeBag)
+    }
+
+    func fetch() {
+        fetchArticles.accept(())
+    }
+}
