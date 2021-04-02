@@ -44,5 +44,4 @@ final class NewsTableViewCell: UITableViewCell {
             setImage(with: url)
         }
     }
-    
 }
