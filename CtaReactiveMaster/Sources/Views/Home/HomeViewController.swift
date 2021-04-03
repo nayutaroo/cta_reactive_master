@@ -76,27 +76,47 @@ final class HomeViewController: UIViewController {
 //            .disposed(by: disposeBag)
         
 
-        
-        viewModel.output.loadingStatus
-            .subscribe(Binder(self) { me, status in
-                switch status {
-                case .initial, .loadSuccess:
-                    Observable.just(())
-                        .bind(to: me.activityIndicator.rx.stopAnimating, me.refreshControl.rx.endRefreshing)
-                        .disposed(by: me.disposeBag)
-                case .loading:
-                    Observable.just(())
-                        .bind(to: me.activityIndicator.rx.startAnimating)
-                        .disposed(by: me.disposeBag)
-                case .loadFailed(let error):
-                    Observable.just(error)
-                        .bind(to: Binder(self) { me, error in
-                            me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
-                        })
-                        .disposed(by: me.disposeBag)
-                }
+        viewModel.output.isFetching
+            .filter { $0 == true }
+            .map { _ in }
+            .bind(to: activityIndicator.rx.startAnimating)
+            .disposed(by: disposeBag)
+
+        viewModel.output.isFetching
+            .filter { $0 == false }
+            .map { _ in }
+            .bind(to: activityIndicator.rx.stopAnimating, refreshControl.rx.endRefreshing)
+            .disposed(by: disposeBag)
+
+        viewModel.output.error
+            .bind(to: Binder(self) { me, error in
+                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
             })
             .disposed(by: disposeBag)
+
+//            .bind(to: activityIndicator.rx.startAnimating)
+//            .disposed(by: disposeBag)
+        
+//        viewModel.output.loadingStatus
+//            .subscribe(Binder(self) { me, status in
+//                switch status {
+//                case .initial, .loadSuccess:
+//                    Observable.just(())
+//                        .bind(to: me.activityIndicator.rx.stopAnimating, me.refreshControl.rx.endRefreshing)
+//                        .disposed(by: me.disposeBag)
+//                case .loading:
+//                    Observable.just(())
+//                        .bind(to: me.activityIndicator.rx.startAnimating)
+//                        .disposed(by: me.disposeBag)
+//                case .loadFailed(let error):
+//                    Observable.just(error)
+//                        .bind(to: Binder(self) { me, error in
+//                            me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
+//                        })
+//                        .disposed(by: me.disposeBag)
+//                }
+//            })
+//            .disposed(by: disposeBag)
    
 // TODO: 後々削除
 //        viewModel.output.loadingStatus
