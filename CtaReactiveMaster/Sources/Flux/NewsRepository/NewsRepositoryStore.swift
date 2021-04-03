@@ -19,8 +19,8 @@ final class NewsRepositoryStore {
     let articles: Property<[Article]>
     private let _articles = BehaviorRelay<[Article]>(value: [])
 
-    let loadingStatus: Property<LoadingStatus>
-    private let _loadingStatus = BehaviorRelay<LoadingStatus>(value: .initial)
+    let isFetching: Property<Bool>
+    private let _isFetching = BehaviorRelay<Bool>(value: false)
 
     //状態として保持しない場合はObservableのみで良い
     let error: Observable<Error>
@@ -30,14 +30,14 @@ final class NewsRepositoryStore {
         error = dispatcher.error.asObservable()
 
         articles = Property(_articles)
-        loadingStatus = Property(_loadingStatus)
+        isFetching = Property(_isFetching)
 
         dispatcher.articles
             .bind(to: _articles)
             .disposed(by: disposeBag)
 
-        dispatcher.loadingStatus
-            .bind(to: _loadingStatus)
+        dispatcher.isFetching
+            .bind(to: _isFetching)
             .disposed(by: disposeBag)
     }
 }

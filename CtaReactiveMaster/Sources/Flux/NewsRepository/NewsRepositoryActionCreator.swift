@@ -38,9 +38,9 @@ final class NewsRepositoryActionCreator {
             .bind(to: dispatcher.error)
             .disposed(by: disposeBag)
 
-        Observable.merge(fetchArticles.map { _ in LoadingStatus.loading },
-                         fetchedEvent.map { _ in LoadingStatus.initial })
-            .bind(to: dispatcher.loadingStatus)
+        Observable.merge(fetchArticles.map { _ in true },
+                         fetchedEvent.map { _ in false })
+            .bind(to: dispatcher.isFetching)
             .disposed(by: disposeBag)
     }
 
