@@ -12,7 +12,7 @@ final class NewsRepositoryDispatcher {
     static let shared = NewsRepositoryDispatcher()
 
     let articles = PublishRelay<[Article]>()
-    let loadingStatus = PublishRelay<LoadingStatus>()
+    let isFetching = PublishRelay<Bool>()
     let error = PublishRelay<Error>()
 
     private init() {}

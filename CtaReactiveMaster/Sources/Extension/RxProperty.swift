@@ -4,11 +4,12 @@
 //  RxProperty
 //
 //  Created by Yasuhiro Inami on 2017-03-11.
+//  Updated by Kohei Keta on 2021-04-03
 //  Copyright © 2017 Yasuhiro Inami. All rights reserved.
 //
 
 import RxSwift
-import RxRelay
+import RxCocoa
 
 /// A get-only `BehaviorRelay` that works similar to ReactiveSwift's `Property`.
 ///
@@ -79,6 +80,12 @@ public final class Property<Element> {
     /// This is same as `ReactiveSwift.Property<T>.producer`.
     public func asObservable() -> Observable<E> {
         return _behaviorRelay.asObservable()
+    }
+
+    /// Observable that synchronously sends current element and then changed elements as Driver.
+    /// This is same as `ReactiveSwift.Property<T>.driver`.
+    public func asDriver() -> Driver<E> {
+        return _behaviorRelay.asDriver()
     }
 
     /// Observable that only sends changed elements, ignoring current element.
