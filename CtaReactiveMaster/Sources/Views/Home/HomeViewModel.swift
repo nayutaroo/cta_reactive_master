@@ -5,9 +5,9 @@
 //  Created by 化田晃平 on R 3/03/05.
 //
 
+import Foundation
 import RxSwift
 import RxCocoa
-import Foundation
 
 protocol HomeViewModelProtocol {
     var input: HomeViewModelInputs { get }
@@ -21,7 +21,7 @@ protocol HomeViewModelInputs {
 }
 
 protocol HomeViewModelOutputs {
-    var articles: Driver<[Article]> { get }
+    var articles: Observable<[Article]> { get }
     var isFetching: Observable<Bool> { get }
     var error: Observable<Error> { get }
 }
@@ -37,7 +37,7 @@ final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewM
     var input: HomeViewModelInputs { self }
     var output: HomeViewModelOutputs { self }
 
-    let articles: Driver<[Article]>
+    let articles: Observable<[Article]>
     let isFetching: Observable<Bool>
     let error: Observable<Error>
 
@@ -46,8 +46,8 @@ final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewM
         let newsActionCreator = flux.newsRepositoryActionCreator
         let newsStore = flux.newsRepositoryStore
 
-        articles = newsStore.articles.asDriver()
-        isFetching = newsStore.isFetching.asObservable()
+        articles = newsStore.$articles
+        isFetching = newsStore.$isFetching
 
         error = newsStore.error
             .flatMap { error -> Observable<Error> in
