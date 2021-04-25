@@ -16,11 +16,14 @@ final class NewsRepositoryStore {
 
     private let disposeBag = DisposeBag()
 
-    let articles: Property<[Article]>
-    private let _articles = BehaviorRelay<[Article]>(value: [])
+//    let articles: Property<[Article]>
+//    private let _articles = BehaviorRelay<[Article]>(value: [])
 
-    let isFetching: Property<Bool>
-    private let _isFetching = BehaviorRelay<Bool>(value: false)
+    @BehaviorRelayOutput(value: []) private(set) var articles: [Article]
+    @BehaviorRelayOutput(value: false) private(set) var isFetching: Bool
+
+//    let isFetching: Property<Bool>
+//    private let _isFetching = BehaviorRelay<Bool>(value: false)
 
     //状態として保持しない場合はObservableのみで良い
     let error: Observable<Error>
@@ -29,8 +32,7 @@ final class NewsRepositoryStore {
         self.dispatcher = dispatcher
         error = dispatcher.error.asObservable()
 
-        articles = Property(_articles)
-        isFetching = Property(_isFetching)
+//        isFetching = Property(_isFetching)
 
         dispatcher.articles
             .bind(to: _articles)
