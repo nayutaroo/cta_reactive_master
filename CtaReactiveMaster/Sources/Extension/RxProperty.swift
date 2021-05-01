@@ -20,7 +20,7 @@ import RxCocoa
 ///     https://github.com/ReactiveCocoa/ReactiveSwift/blob/1.1.0/Sources/Property.swift
 ///     https://github.com/ReactiveX/RxSwift/pull/1118 (unmerged)
 public final class Property<Element> {
-
+    
     public typealias E = Element
 
     private let _behaviorRelay: BehaviorRelay<E>
