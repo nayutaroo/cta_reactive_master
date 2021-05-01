@@ -18,6 +18,8 @@ protocol HomeViewModelInputs {
     func retryFetch()
     func viewDidLoad()
     func refresh()
+
+    
 }
 
 protocol HomeViewModelOutputs {
