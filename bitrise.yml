@@ -37,32 +37,9 @@ workflows:
         inputs:
         - content: >-
             echo " echo "NewsApiKey: ${SECRET_ENV_ONE}"${NEWS_API_KEY}" >
-            CtaReactiveMaster/Resources/Key.plist
-
-
-            #!/usr/bin/env bash
-
-            # fail if any commands fails
-
+            /Users/vagrant/git/CtaReactiveMaster/Resources/Key.plist
             set -e
-
-            # debug log
-
             set -x
-
-
-            # write your script here
-
-            echo "Hello World!"
-
-
-            # or run a script from your repository, like:
-
-            # bash ./path/to/script.sh
-
-            # not just bash, e.g.:
-
-            # ruby ./path/to/script.rb
     - activate-ssh-key@4:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@4: {}
