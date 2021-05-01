@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxRelay
+import RxSwift
 
 final class NewsRepositoryActionCreator {
     static let shared = NewsRepositoryActionCreator()

@@ -93,6 +93,4 @@ public final class Property<Element> {
     public var changed: Observable<E> {
         return asObservable().skip(1)
     }
-
 }
-

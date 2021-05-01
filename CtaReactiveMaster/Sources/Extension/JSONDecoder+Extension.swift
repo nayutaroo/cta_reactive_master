@@ -8,7 +8,7 @@
 import Foundation
 
 extension JSONDecoder {
-    //クロージャで.iso8601の言語設定をした上で定義
+    // クロージャで.iso8601の言語設定をした上で定義
     static let iso8601: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601

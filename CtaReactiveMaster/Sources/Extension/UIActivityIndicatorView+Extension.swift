@@ -5,8 +5,8 @@
 //  Created by 化田晃平 on R 3/03/05.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 
 extension Reactive where Base: UIActivityIndicatorView {
@@ -15,7 +15,7 @@ extension Reactive where Base: UIActivityIndicatorView {
             base.startAnimating()
         }
     }
-    
+
     var stopAnimating: Binder<Void> {
         Binder(self.base) { base, _ in
             if base.isAnimating {

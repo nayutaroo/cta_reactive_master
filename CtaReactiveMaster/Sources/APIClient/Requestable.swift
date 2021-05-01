@@ -11,7 +11,7 @@ protocol Requestable {
 //    associatedtype
 //    protocolにおけるジェネリック
 //    protocolを採用するものはassociatedtypeで指定したものに対して型を決定させる
-    
+
     associatedtype Response: Decodable
     var url: URL { get }
 }

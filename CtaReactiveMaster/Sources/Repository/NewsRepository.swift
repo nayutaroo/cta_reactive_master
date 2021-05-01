@@ -16,9 +16,9 @@ protocol Repository {
 
 struct NewsRepository: Repository {
     typealias Response = News
-    
+
     let apiClient = APIClient(decoder: .iso8601)
-    
+
     func fetch() -> Single<News> {
         let request = NewsAPIRequest(endpoint: .topHeadlines(.us, .technology))
         return apiClient.request(request)

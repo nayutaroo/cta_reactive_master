@@ -9,12 +9,12 @@ import Foundation
 import RxSwift
 
 struct APIClient {
-    let decoder : JSONDecoder
-    
+    let decoder: JSONDecoder
+
     // 返り値にSingle型を用いるのは APIの結果を.success, .failureのいずれかで通知させたいから。
     // 加えてCompletionを流すときはMaybe, また, successを流さない場合はCompletable特性を利用する。
     // ちなみにエラーを返さなくても良い場合はDriver, Signal（Driverのreplayがない版）を利用する。
-    func request<T: Requestable>(_ request:T) -> Single<T.Response> {
+    func request<T: Requestable>(_ request: T) -> Single<T.Response> {
         Single<T.Response>.create(
             subscribe: { observer in
                 let task = URLSession.shared.dataTask(with: request.url) { (data, response, error) in
