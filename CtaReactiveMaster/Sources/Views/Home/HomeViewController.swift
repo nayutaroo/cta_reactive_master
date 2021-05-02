@@ -25,10 +25,10 @@ final class HomeViewController: UIViewController {
     }
 
     private let disposeBag = DisposeBag()
-    private let viewModel: HomeViewModelProtocol
+    private let viewModel: HomeViewModel
     private let refreshControl = UIRefreshControl()
 
-    init(viewModel: HomeViewModelProtocol) {
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,10 +40,11 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewSetup()
+        viewModel.$viewDidLoad.accept(())
 
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .bind(to: Binder(self) { me, _ in
-                me.viewModel.input.refresh()
+                me.viewModel.$refresh.accept(())
             })
             .disposed(by: disposeBag)
 
@@ -56,32 +57,33 @@ final class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.output.articles.asObservable()
+        viewModel.articles.asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: NewsTableViewCell.identifier,
                                          cellType: NewsTableViewCell.self)) { _, article, cell in
                 cell.configure(with: article)
             }
             .disposed(by: disposeBag)
 
-        viewModel.output.isFetching
+        viewModel.isFetching
             .filter { $0 }
             .filter { [weak self] _ in self?.refreshControl.isRefreshing == false }
             .map { _ in }
             .bind(to: activityIndicator.rx.startAnimating)
             .disposed(by: disposeBag)
 
-        viewModel.output.isFetching
-            .filter { $0 == false }
+        viewModel.isFetching
+            .filter { !$0 }
             .map { _ in }
             .bind(to: activityIndicator.rx.stopAnimating, refreshControl.rx.endRefreshing)
             .disposed(by: disposeBag)
 
-        viewModel.output.error
+        viewModel.error
             .bind(to: Binder(self) { me, error in
-                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
+                me.showRetryAlert(with: error) {
+                    me.viewModel.$retryFetch.accept(())
+                }
             })
             .disposed(by: disposeBag)
-        viewModel.input.viewDidLoad()
     }
 
     private func viewSetup() {

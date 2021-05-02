@@ -12,7 +12,9 @@ import RxSwift
 final class PublishRelayInput<Element> {
 
     fileprivate let relay: PublishRelay<Element>
-    fileprivate let observable: Observable<Element>
+    init() {
+        relay = .init()
+    }
 
     var wrappedValue: Observable<Element> {
         relay.asObservable()
@@ -21,9 +23,10 @@ final class PublishRelayInput<Element> {
     var projectedValue: PublishRelay<Element> {
         relay
     }
+}
 
-    init() {
-        relay = .init()
-        observable = relay.asObservable()
+extension PublishRelayInput {
+    func accept(value: Element) {
+        relay.accept(value)
     }
 }

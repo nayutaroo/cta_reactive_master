@@ -9,33 +9,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol HomeViewModelProtocol {
-    var input: HomeViewModelInputs { get }
-    var output: HomeViewModelOutputs { get }
-}
+final class HomeViewModel {
 
-protocol HomeViewModelInputs {
-    func retryFetch()
-    func viewDidLoad()
-    func refresh()
-}
-
-protocol HomeViewModelOutputs {
-    var articles: Observable<[Article]> { get }
-    var isFetching: Observable<Bool> { get }
-    var error: Observable<Error> { get }
-}
-
-final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewModelOutputs {
-
-    private let viewDidLoadRelay = PublishRelay<Void>()
-    private let refreshRelay = PublishRelay<Void>()
-    private let retryFetchRelay = PublishRelay<Void>()
+    @PublishRelayInput var viewDidLoad: Observable<Void>
+    @PublishRelayInput var retryFetch: Observable<Void>
+    @PublishRelayInput var refresh: Observable<Void>
 
     private let disposeBag = DisposeBag()
-
-    var input: HomeViewModelInputs { self }
-    var output: HomeViewModelOutputs { self }
 
     let articles: Observable<[Article]>
     let isFetching: Observable<Bool>
@@ -51,25 +31,21 @@ final class HomeViewModel: HomeViewModelProtocol, HomeViewModelInputs, HomeViewM
 
         error = newsStore.error
             .flatMap { error -> Observable<Error> in
-            guard let error = error as? NewsAPIError else { return .empty()}
+                guard let error = error as? NewsAPIError else { return .empty() }
                 switch error {
                 case let .decode(error), let .unknown(error):
-                return .just(error)
+                    return .just(error)
                 case .noResponse:
                     let error = NSError(domain: "サーバからの応答がありません。", code: -1, userInfo: nil)
                     return .just(error)
-                 }
+                }
             }
             .share()
 
-        Observable.merge(viewDidLoadRelay.asObservable(), refreshRelay.asObservable(), retryFetchRelay.asObservable())
+        Observable.merge(viewDidLoad, refresh, retryFetch)
             .subscribe(onNext: {
                 newsActionCreator.fetch()
             })
             .disposed(by: disposeBag)
     }
-
-    func viewDidLoad() { viewDidLoadRelay.accept(()) }
-    func retryFetch() { retryFetchRelay.accept(()) }
-    func refresh() { refreshRelay.accept(()) }
 }

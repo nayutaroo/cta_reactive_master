@@ -12,18 +12,13 @@ import RxSwift
 final class PublishRelayOutput<Element> {
 
     fileprivate let relay: PublishRelay<Element>
-    fileprivate let observable: Observable<Element>
 
     var wrappedValue: Observable<Element> {
-        observable
-    }
-    var projectedValue: PublishRelay<Element> {
-        relay
+        relay.asObservable()
     }
 
     init() {
         relay = .init()
-        observable = relay.asObservable()
     }
 }
 
