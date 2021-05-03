@@ -21,7 +21,7 @@ final class HomeViewModel {
     let isFetching: Observable<Bool>
     let error: Observable<Error>
 
-    init(repository: NewsRepository = .init(), flux: Flux = .shared) {
+    init(flux: Flux = .shared) {
 
         let newsActionCreator = flux.newsRepositoryActionCreator
         let newsStore = flux.newsRepositoryStore

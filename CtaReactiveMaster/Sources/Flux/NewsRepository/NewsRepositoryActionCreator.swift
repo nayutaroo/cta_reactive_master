@@ -19,7 +19,7 @@ final class NewsRepositoryActionCreator {
     private let fetchArticles = PublishRelay<Void>()
 
     private init(dispatcher: NewsRepositoryDispatcher = .shared,
-                 repository: NewsRepository = .init()) {
+                 repository: NewsRepository = NewsRepositoryImpl()) {
         self.dispatcher = dispatcher
         self.repository = repository
 
