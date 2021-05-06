@@ -14,18 +14,17 @@ final class NewsRepositoryActionCreator {
 
     private let repository: NewsRepository
     private let dispatcher: NewsRepositoryDispatcher
-
     private let disposeBag = DisposeBag()
-    private let fetchArticles = PublishRelay<Void>()
+    let fetchNews = PublishRelay<Void>()
 
     private init(dispatcher: NewsRepositoryDispatcher = .shared,
                  repository: NewsRepository = NewsRepositoryImpl()) {
         self.dispatcher = dispatcher
         self.repository = repository
 
-        let fetchedEvent = fetchArticles
+        let fetchedEvent = fetchNews
             .flatMap {
-                repository.fetch().asObservable().materialize()
+                repository.fetchNews().asObservable().materialize()
             }
             .share()
 
@@ -38,13 +37,9 @@ final class NewsRepositoryActionCreator {
             .bind(to: dispatcher.error)
             .disposed(by: disposeBag)
 
-        Observable.merge(fetchArticles.map { _ in true },
+        Observable.merge(fetchNews.map { _ in true },
                          fetchedEvent.map { _ in false })
             .bind(to: dispatcher.isFetching)
             .disposed(by: disposeBag)
-    }
-
-    func fetch() {
-        fetchArticles.accept(())
     }
 }

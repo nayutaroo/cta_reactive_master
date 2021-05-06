@@ -9,7 +9,11 @@ import UIKit
 
 extension UIViewController {
     func showRetryAlert(with error: Error, retryhandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "Error",
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
         alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "Retry", style: .default) { _ in
             retryhandler()

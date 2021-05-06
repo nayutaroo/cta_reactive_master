@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 final class NewsRepositoryStore {
 
@@ -19,7 +19,7 @@ final class NewsRepositoryStore {
     @BehaviorRelayOutput(value: []) private(set) var articles: [Article]
     @BehaviorRelayOutput(value: false) private(set) var isFetching: Bool
 
-    //状態として保持しない場合はObservableのみで良い
+    // 状態として保持しない場合はObservableのみで良い
     let error: Observable<Error>
 
     private init(dispatcher: NewsRepositoryDispatcher = .shared) {

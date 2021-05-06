@@ -57,7 +57,7 @@ final class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.articles.asObservable()
+        viewModel.articles
             .bind(to: tableView.rx.items(cellIdentifier: NewsTableViewCell.identifier,
                                          cellType: NewsTableViewCell.self)) { _, article, cell in
                 cell.configure(with: article)

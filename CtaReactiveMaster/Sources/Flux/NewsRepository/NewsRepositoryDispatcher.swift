@@ -5,8 +5,8 @@
 //  Created by 化田晃平 on R 3/04/02.
 //
 
-import RxSwift
 import RxRelay
+import RxSwift
 
 final class NewsRepositoryDispatcher {
     static let shared = NewsRepositoryDispatcher()

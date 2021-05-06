@@ -21,7 +21,7 @@ struct APIClient {
                     if let error = error {
                         observer(.failure(NewsAPIError.unknown(error)))
                     }
-                    guard let _ = response as? HTTPURLResponse, let data = data else {
+                    guard response as? HTTPURLResponse != nil, let data = data else {
                         observer(.failure(NewsAPIError.noResponse))
                         return
                     }

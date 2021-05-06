@@ -8,6 +8,9 @@
 import RxRelay
 import RxSwift
 
+/* PublishRelayInputのメリット:
+   projectedValueでasObservableを定義しているので利用時に
+   いちいちasObservable()を利用する必要がなくシンプルに書くことができる。 */
 @propertyWrapper
 final class PublishRelayInput<Element> {
 

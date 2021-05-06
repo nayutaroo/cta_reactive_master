@@ -14,9 +14,11 @@ final class Flux {
     let newsRepositoryDispatcher: NewsRepositoryDispatcher
     let newsRepositoryStore: NewsRepositoryStore
 
-    private init(newsRepositoryActionCreator: NewsRepositoryActionCreator = .shared,
-         newsRepositoryDispatcher: NewsRepositoryDispatcher = .shared,
-         newsRepositoryStore: NewsRepositoryStore = .shared) {
+    private init(
+        newsRepositoryActionCreator: NewsRepositoryActionCreator = .shared,
+        newsRepositoryDispatcher: NewsRepositoryDispatcher = .shared,
+        newsRepositoryStore: NewsRepositoryStore = .shared
+    ) {
         self.newsRepositoryActionCreator = newsRepositoryActionCreator
         self.newsRepositoryDispatcher = newsRepositoryDispatcher
         self.newsRepositoryStore = newsRepositoryStore

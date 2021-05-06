@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 final class HomeViewModel {
 
@@ -44,7 +44,7 @@ final class HomeViewModel {
 
         Observable.merge(viewDidLoad, refresh, retryFetch)
             .subscribe(onNext: {
-                newsActionCreator.fetch()
+                newsActionCreator.fetchNews.accept(())
             })
             .disposed(by: disposeBag)
     }
