@@ -6,13 +6,19 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol AuthRepository {
-    func login()
-    func signup()
+    func login(email: String, password: String) -> Single<String>
+    func signup(email: String, password: String) -> Single<String>
 }
 
 struct AuthRepositoryImpl: AuthRepository {
-    func login() {}
-    func signup() {}
+    let firebaseAuth: FirebaseAuth = .init()
+    func signup(email: String, password: String) -> Single<String> {
+        return firebaseAuth.signup(email: email, password: password)
+    }
+    func login(email: String, password: String) -> Single<String> {
+        return firebaseAuth.login(email: email, password: password)
+    }
 }
