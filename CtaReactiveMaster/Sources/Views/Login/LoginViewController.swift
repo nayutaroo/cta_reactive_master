@@ -77,22 +77,29 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             .disposed(by: disposeBag)
 
         // output
-        viewModel.output.loginSucceeded.asObservable()
-            .bind(to: Binder(self) { me, _ in
-                let rootVC = HomeViewController()
-                let navVC = UINavigationController(rootViewController: rootVC)
-                navVC.modalPresentationStyle = .fullScreen
-                me.present(navVC, animated: true)
+        viewModel.output.transitionState
+            .drive( Binder(self) { me, state in
+                switch state {
+                case .home:
+                    let rootVC = HomeViewController()
+                    let navVC = UINavigationController(rootViewController: rootVC)
+                    navVC.modalPresentationStyle = .fullScreen
+                    me.present(navVC, animated: true)
+                case .signup:
+                    let rootVC = SignUpViewController()
+                    let navVC = UINavigationController(rootViewController: rootVC)
+                    navVC.modalPresentationStyle = .fullScreen
+                    me.present(navVC, animated: true)
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
 
         // サインアップ画面へ遷移
-        moveToSignUpViewButton.rx.tap.asDriver()
-            .drive(onNext: { [weak self] in
-                let rootVC = SignUpViewController()
-                let navVC = UINavigationController(rootViewController: rootVC)
-                navVC.modalPresentationStyle = .fullScreen
-                self?.present(navVC, animated: true)
+        moveToSignUpViewButton.rx.tap
+            .subscribe(Binder(self) { me, _ in
+                me.viewModel.input.signupButtonTapped()
             })
             .disposed(by: disposeBag)
     }

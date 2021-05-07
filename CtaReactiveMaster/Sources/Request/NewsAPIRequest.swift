@@ -79,8 +79,8 @@ struct NewsAPIRequest: Requestable {
     }
 }
 
-// NewsAPIErrorの設定
-enum NewsAPIError: Error {
+// APIErrorの設定
+enum APIError: Error {
     case decode(Error)
     case unknown(Error)
     case noResponse
