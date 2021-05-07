@@ -15,7 +15,7 @@ protocol NewsRepository {
 struct NewsRepositoryImpl: NewsRepository {
     let apiClient = APIClient(decoder: .iso8601)
     func fetchNews() -> Single<News> {
-        let request = NewsAPIRequest(endpoint: .topHeadlines(.us, .technology))
+        let request = NewsAPIRequest(endpoint: .topHeadlines(.jp, .general))
         return apiClient.request(request)
     }
 }
