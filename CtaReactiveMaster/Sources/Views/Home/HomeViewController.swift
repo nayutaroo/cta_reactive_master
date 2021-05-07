@@ -6,9 +6,9 @@
 //
 
 import UIKit
-import SafariServices
-import RxSwift
 import RxCocoa
+import RxSwift
+import SafariServices
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {
@@ -17,18 +17,18 @@ final class HomeViewController: UIViewController {
             tableView.refreshControl = refreshControl
         }
     }
-    
+
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView! {
         didSet {
             activityIndicator.hidesWhenStopped = true
         }
     }
-    
+
     private let disposeBag = DisposeBag()
-    private let viewModel: HomeViewModelProtocol
+    private let viewModel: HomeViewModel
     private let refreshControl = UIRefreshControl()
-    
-    init(viewModel: HomeViewModelProtocol) {
+
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,17 +36,18 @@ final class HomeViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewSetup()
-        
+        viewModel.$viewDidLoad.accept(())
+
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .bind(to: Binder(self) { me, _ in
-                me.viewModel.input.refresh()
+                me.viewModel.$refresh.accept(())
             })
             .disposed(by: disposeBag)
-        
+
         tableView.rx.modelSelected(Article.self)
             .bind(to: Binder(self) { me, article in
                 guard let urlString = article.url, let url = URL(string: urlString) else {
@@ -55,79 +56,36 @@ final class HomeViewController: UIViewController {
                 me.present(SFSafariViewController(url: url), animated: true)
             })
             .disposed(by: disposeBag)
-        
-        viewModel.output.articles.asObservable()
-            .bind(to: tableView.rx.items(cellIdentifier: NewsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { _, article, cell in
+
+        viewModel.articles
+            .bind(to: tableView.rx.items(cellIdentifier: NewsTableViewCell.identifier,
+                                         cellType: NewsTableViewCell.self)) { _, article, cell in
                 cell.configure(with: article)
             }
             .disposed(by: disposeBag)
-        
-// TODO: 後々削除
-//        viewModel.output.loadingStatus
-//            .flatMap { status -> Observable<Void> in
-//                switch status {
-//                case .initial, .loadSuccess:
-//                    return .just(())
-//                case .isLoading, .loadFailed:
-//                    return .empty()
-//                }
-//            }
-//            .bind(to: activityIndicator.rx.stopAnimating, refreshControl.rx.endRefreshing)
-//            .disposed(by: disposeBag)
-        
 
-        
-        viewModel.output.loadingStatus
-            .subscribe(Binder(self) { me, status in
-                switch status {
-                case .initial, .loadSuccess:
-                    Observable.just(())
-                        .bind(to: me.activityIndicator.rx.stopAnimating, me.refreshControl.rx.endRefreshing)
-                        .disposed(by: me.disposeBag)
-                case .loading:
-                    Observable.just(())
-                        .bind(to: me.activityIndicator.rx.startAnimating)
-                        .disposed(by: me.disposeBag)
-                case .loadFailed(let error):
-                    Observable.just(error)
-                        .bind(to: Binder(self) { me, error in
-                            me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
-                        })
-                        .disposed(by: me.disposeBag)
+        viewModel.isFetching
+            .filter { $0 }
+            .filter { [weak self] _ in self?.refreshControl.isRefreshing == false }
+            .map { _ in }
+            .bind(to: activityIndicator.rx.startAnimating)
+            .disposed(by: disposeBag)
+
+        viewModel.isFetching
+            .filter { !$0 }
+            .map { _ in }
+            .bind(to: activityIndicator.rx.stopAnimating, refreshControl.rx.endRefreshing)
+            .disposed(by: disposeBag)
+
+        viewModel.error
+            .bind(to: Binder(self) { me, error in
+                me.showRetryAlert(with: error) {
+                    me.viewModel.$retryFetch.accept(())
                 }
             })
             .disposed(by: disposeBag)
-   
-// TODO: 後々削除
-//        viewModel.output.loadingStatus
-//            .flatMap { status -> Observable<Void> in
-//                switch status {
-//                case .isLoading:
-//                    return .just(())
-//                case .initial, .loadSuccess, .loadFailed:
-//                    return .empty()
-//                }
-//            }
-//            .bind(to: activityIndicator.rx.startAnimating)
-//            .disposed(by: disposeBag)
-//
-//        viewModel.output.loadingStatus
-//            .flatMap { status -> Observable<Error> in
-//                switch status {
-//                case .loadFailed(let error):
-//                    return .just(error)
-//                case .initial, .isLoading, .loadSuccess:
-//                    return .empty()
-//                }
-//            }
-//            .subscribe(Binder(self) { me, error in
-//                me.showRetryAlert(with: error, retryhandler: me.viewModel.input.retryFetch)
-//            })
-//            .disposed(by: disposeBag)
-        
-        viewModel.input.viewDidLoad()
     }
-    
+
     private func viewSetup() {
         navigationItem.title = "NewsAPI"
         navigationController?.navigationBar.titleTextAttributes

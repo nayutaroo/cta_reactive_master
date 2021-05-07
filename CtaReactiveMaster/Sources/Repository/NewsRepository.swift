@@ -8,18 +8,13 @@
 import Foundation
 import RxSwift
 
-protocol Repository {
-    associatedtype Response
+protocol NewsRepository {
     var apiClient: APIClient { get }
-    func fetch() -> Single<News>
+    func fetchNews() -> Single<News>
 }
-
-struct NewsRepository: Repository {
-    typealias Response = News
-    
+struct NewsRepositoryImpl: NewsRepository {
     let apiClient = APIClient(decoder: .iso8601)
-    
-    func fetch() -> Single<News> {
+    func fetchNews() -> Single<News> {
         let request = NewsAPIRequest(endpoint: .topHeadlines(.us, .technology))
         return apiClient.request(request)
     }
