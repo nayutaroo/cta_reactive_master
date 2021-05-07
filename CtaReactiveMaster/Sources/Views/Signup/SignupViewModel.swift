@@ -1,31 +1,33 @@
 //
-//  LoginViewModel.swift
-//  hack_iOS
+//  SignupViewModel.swift
+//  CtaReactiveMaster
 //
 //  Created by 化田晃平 on R 3/03/26.
 //
 
 import Foundation
-import RxCocoa
-import RxSwift
 
-protocol LoginViewModelType {
-    var input: LoginViewModelInput { get }
-    var output: LoginViewModelOutput { get }
+import Foundation
+import RxSwift
+import RxCocoa
+
+protocol SignupViewModelType {
+    var input: SignupViewModelInput { get }
+    var output: SignupViewModelOutput { get }
 }
 
-protocol LoginViewModelInput {
+protocol SignupViewModelInput {
     var username: BehaviorRelay<String> { get }
     var password: BehaviorRelay<String> { get }
     func loginButtonTapped()
     func signupButtonTapped()
 }
 
-protocol LoginViewModelOutput {
-    var transitionState: Driver<LoginViewModel.TransitionState> { get }
+protocol SignupViewModelOutput {
+    var transitionState: Driver<SignupViewModel.TransitionState> { get }
 }
 
-final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewModelOutput {
+final class SignupViewModel: SignupViewModelType, SignupViewModelInput, SignupViewModelOutput {
 
     struct Dependency {
         var authrepository: AuthRepository
@@ -33,7 +35,7 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
 
     enum TransitionState {
         case initial
-        case signup
+        case login
         case home
         case showAlert(message: String)
     }
@@ -42,12 +44,7 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
     let password = BehaviorRelay<String>(value: "")
 
     private let loginButtonTappedRelay = PublishRelay<Void>()
-    private let signUpButtonTappedRelay = PublishRelay<Void>()
-
-    private let loginSucceededRelay = PublishRelay<Void>()
-    var loginSucceeded: Signal<Void> {
-        loginSucceededRelay.asSignal()
-    }
+    private let signupButtonTappedRelay = PublishRelay<Void>()
 
     let transitionStateRelay = BehaviorRelay<TransitionState>(value: .initial)
     var transitionState: Driver<TransitionState> {
@@ -57,24 +54,13 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
     private let dependency: Dependency
     private let disposeBag = DisposeBag()
 
-    var input: LoginViewModelInput { self }
-    var output: LoginViewModelOutput { self }
+    var input: SignupViewModelInput { self }
+    var output: SignupViewModelOutput { self }
 
     init(dependency: Dependency) {
         self.dependency = dependency
 
-        let loginEvent = loginButtonTappedRelay
-            .withLatestFrom(username)
-            .filter { !$0.isEmpty }
-            .withLatestFrom(password) { ($0, $1) } // optionalの場合はエラーを吐く....
-            .filter { !$1.isEmpty }
-            .flatMap { username, password in
-                dependency.authrepository.login(email: username, password: password)
-                    .asObservable().materialize()
-            }
-            .share()
-
-        loginButtonTappedRelay
+        signupButtonTappedRelay
             .withLatestFrom(username)
             .filter { $0.isEmpty }
             .subscribe(Binder(self) { me, _ in
@@ -82,7 +68,7 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
             })
             .disposed(by: disposeBag)
 
-        loginButtonTappedRelay
+        signupButtonTappedRelay
             .withLatestFrom(password)
             .filter { $0.isEmpty }
             .subscribe(Binder(self) { me, _ in
@@ -90,26 +76,49 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
             })
             .disposed(by: disposeBag)
 
-        loginEvent
+        let signupEvent = signupButtonTappedRelay
+            .withLatestFrom(username)
+            .withLatestFrom(password) { ($0, $1) } // optionalの場合はエラーを吐く....
+            .filter { username, password in
+                !username.isEmpty && !password.isEmpty
+            }
+            .flatMap { username, password in
+                dependency.authrepository.signup(email: username, password: password)
+                    .asObservable().materialize()
+            }
+            .share()
+
+        signupEvent
             .flatMap { $0.element.map(Observable.just) ?? .empty() }
             .subscribe( Binder(self) { me, _ in
+//                guard let authToken = token["token"] else { return }
+//                me.dependency.keychainAccessRepository.save(token: authToken)
+//                me.loginSucceededRelay.accept(())
                 me.transitionStateRelay.accept(.home)
             })
             .disposed(by: disposeBag)
 
-        loginEvent
+        signupEvent
             .flatMap { $0.error.map(Observable.just) ?? .empty() }
             .subscribe( Binder(self) { _, error in
                 print(error)
+//                switch error {
+//                case .decode(let error):
+//                    print(error)
+//                case .unknown(let error):
+//                    print(error)
+//                case .noResponse:
+//                    print("No Response")
+//                }
             })
             .disposed(by: disposeBag)
 
-        signUpButtonTappedRelay
-            .map { _ in TransitionState.signup }
+        loginButtonTappedRelay
+            .map { _ in TransitionState.login }
             .bind(to: transitionStateRelay)
             .disposed(by: disposeBag)
     }
 
     func loginButtonTapped() { loginButtonTappedRelay.accept(()) }
-    func signupButtonTapped() { signUpButtonTappedRelay.accept(()) }
+    func signupButtonTapped() { signupButtonTappedRelay.accept(()) }
 }

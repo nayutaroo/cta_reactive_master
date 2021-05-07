@@ -9,7 +9,7 @@ import FirebaseAuth
 import RxSwift
 
 struct FirebaseAuth {
-    
+
     func signup(email: String, password: String) -> Single<String> {
         Single<String>.create(subscribe: { observer in
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in

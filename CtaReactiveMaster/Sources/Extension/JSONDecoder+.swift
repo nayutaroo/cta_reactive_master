@@ -1,5 +1,5 @@
 //
-//  JSONDecoder+Extension.swift
+//  JSONDecoder+.swift
 //  CtaReactiveMaster
 //
 //  Created by 化田晃平 on R 3/01/18.
