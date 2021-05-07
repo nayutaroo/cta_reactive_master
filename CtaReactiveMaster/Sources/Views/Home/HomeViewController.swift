@@ -89,7 +89,10 @@ final class HomeViewController: UIViewController {
     private func viewSetup() {
         navigationItem.title = "NewsAPI"
         navigationController?.navigationBar.titleTextAttributes
-            = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!]
+            = [
+                NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!,
+                NSAttributedString.Key.foregroundColor: UIColor(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
+            ]
         navigationController?.navigationBar.backgroundColor = UIColor.brown
     }
 }
