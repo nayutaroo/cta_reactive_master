@@ -100,16 +100,8 @@ final class SignupViewModel: SignupViewModelType, SignupViewModelInput, SignupVi
 
         signupEvent
             .flatMap { $0.error.map(Observable.just) ?? .empty() }
-            .subscribe( Binder(self) { _, error in
-                print(error)
-//                switch error {
-//                case .decode(let error):
-//                    print(error)
-//                case .unknown(let error):
-//                    print(error)
-//                case .noResponse:
-//                    print("No Response")
-//                }
+            .subscribe( Binder(self) { me, error in
+                me.transitionStateRelay.accept(.showAlert(message: "サインアップに失敗しました"))
             })
             .disposed(by: disposeBag)
 
