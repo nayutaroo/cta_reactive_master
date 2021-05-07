@@ -28,7 +28,7 @@ final class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel
     private let refreshControl = UIRefreshControl()
 
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
