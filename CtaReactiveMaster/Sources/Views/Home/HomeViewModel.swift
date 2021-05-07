@@ -31,7 +31,7 @@ final class HomeViewModel {
 
         error = newsStore.error
             .flatMap { error -> Observable<Error> in
-                guard let error = error as? NewsAPIError else { return .empty() }
+                guard let error = error as? APIError else { return .empty() }
                 switch error {
                 case let .decode(error), let .unknown(error):
                     return .just(error)
