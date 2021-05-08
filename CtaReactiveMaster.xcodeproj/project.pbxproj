@@ -16,6 +16,7 @@
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
 		D71C2BAB25A7EE6800AE29EE /* NewsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */; };
+		D744906A26466EDD007AFF8A /* MockNewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744906926466EDD007AFF8A /* MockNewsRepository.swift */; };
 		D74B64AC2643BEA400DE3A43 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */; };
 		D74B64AD2643BEA400DE3A43 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */; };
 		D74B64B22643BEEB00DE3A43 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */; };
@@ -74,6 +75,7 @@
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
+		D744906926466EDD007AFF8A /* MockNewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNewsRepository.swift; sourceTree = "<group>"; };
 		D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +219,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		D744906826466EC3007AFF8A /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				D744906926466EDD007AFF8A /* MockNewsRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		D74B64A82643BE5500DE3A43 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +356,7 @@
 		D848D4B125681910008CA221 /* CtaReactiveMasterTests */ = {
 			isa = PBXGroup;
 			children = (
+				D744906826466EC3007AFF8A /* Repository */,
 				D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */,
 				D848D4B425681910008CA221 /* Info.plist */,
 			);
@@ -528,6 +539,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D744906A26466EDD007AFF8A /* MockNewsRepository.swift in Sources */,
 				D848D4B325681910008CA221 /* CtaReactiveMasterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -717,9 +729,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M33PJJ325D;
 				INFOPLIST_FILE = CtaReactiveMasterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -742,9 +755,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M33PJJ325D;
 				INFOPLIST_FILE = CtaReactiveMasterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
