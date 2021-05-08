@@ -68,11 +68,11 @@ final class SignupViewController: UIViewController, UITextFieldDelegate {
     private func addRxObsserver() {
 
         // input
-        userNameTextField.rx.text.orEmpty.asObservable()
+        userNameTextField.rx.text.orEmpty
             .bind(to: viewModel.input.username)
             .disposed(by: disposeBag)
 
-        passwordTextField.rx.text.orEmpty.asObservable()
+        passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
 
