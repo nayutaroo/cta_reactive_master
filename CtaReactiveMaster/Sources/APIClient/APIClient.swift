@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-struct APIClient {
+public struct APIClient {
     let decoder: JSONDecoder
 
     // 返り値にSingle型を用いるのは APIの結果を.success, .failureのいずれかで通知させたいから。

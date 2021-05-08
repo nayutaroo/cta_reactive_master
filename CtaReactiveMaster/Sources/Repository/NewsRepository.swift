@@ -8,12 +8,17 @@
 import Foundation
 import RxSwift
 
-protocol NewsRepository {
+public protocol NewsRepository {
     var apiClient: APIClient { get }
     func fetchNews() -> Single<News>
 }
 struct NewsRepositoryImpl: NewsRepository {
-    let apiClient = APIClient(decoder: .iso8601)
+    let apiClient: APIClient
+
+    init(apiClient: APIClient = APIClient(decoder: .iso8601)) {
+        self.apiClient = apiClient
+    }
+
     func fetchNews() -> Single<News> {
         let request = NewsAPIRequest(endpoint: .topHeadlines(.jp, .general))
         return apiClient.request(request)
