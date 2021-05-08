@@ -40,8 +40,11 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewSetup()
+        addRxObserver()
         viewModel.$viewDidLoad.accept(())
+    }
 
+    private func addRxObserver() {
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .bind(to: Binder(self) { me, _ in
                 me.viewModel.$refresh.accept(())
