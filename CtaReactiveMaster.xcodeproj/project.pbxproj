@@ -24,6 +24,7 @@
 		D74B64B92643BF3700DE3A43 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64B82643BF3700DE3A43 /* AuthRepository.swift */; };
 		D74B64C02643C09A00DE3A43 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64BF2643C09A00DE3A43 /* LoginViewModel.swift */; };
 		D74B64C62643C0B500DE3A43 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64C52643C0B500DE3A43 /* SignupViewModel.swift */; };
+		D75F2C0B26496A640086EA43 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */; };
 		D766C5B82644D631002273FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D766C5B72644D631002273FB /* RxCocoa */; };
 		D766C5BA2644D636002273FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D766C5B92644D636002273FB /* RxSwift */; };
 		D766C5BC2644D63D002273FB /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D766C5BB2644D63D002273FB /* RxRelay */; };
@@ -83,6 +84,7 @@
 		D74B64B82643BF3700DE3A43 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		D74B64BF2643C09A00DE3A43 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D74B64C52643C0B500DE3A43 /* SignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		D766C5BF26450F2E002273FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D766C5C526451300002273FB /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		D766C5CD26456B69002273FB /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -219,12 +221,12 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		D744906826466EC3007AFF8A /* Repository */ = {
+		D744906826466EC3007AFF8A /* Mock */ = {
 			isa = PBXGroup;
 			children = (
 				D744906926466EDD007AFF8A /* MockNewsRepository.swift */,
 			);
-			path = Repository;
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		D74B64A82643BE5500DE3A43 /* Login */ = {
@@ -261,6 +263,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D75F2C0926496A400086EA43 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */,
+				D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		D766C5C4264512D5002273FB /* Auth */ = {
@@ -356,8 +367,8 @@
 		D848D4B125681910008CA221 /* CtaReactiveMasterTests */ = {
 			isa = PBXGroup;
 			children = (
-				D744906826466EC3007AFF8A /* Repository */,
-				D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */,
+				D75F2C0926496A400086EA43 /* Tests */,
+				D744906826466EC3007AFF8A /* Mock */,
 				D848D4B425681910008CA221 /* Info.plist */,
 			);
 			path = CtaReactiveMasterTests;
@@ -541,6 +552,7 @@
 			files = (
 				D744906A26466EDD007AFF8A /* MockNewsRepository.swift in Sources */,
 				D848D4B325681910008CA221 /* CtaReactiveMasterTests.swift in Sources */,
+				D75F2C0B26496A640086EA43 /* HomeViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-public protocol NewsRepository {
+protocol NewsRepository {
     var apiClient: APIClient { get }
     func fetchNews() -> Single<News>
 }

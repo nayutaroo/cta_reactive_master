@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CtaReactiveMaster
+@testable import CtaReactiveMaster
 import RxSwift
 
 struct MockNewsRepository: NewsRepository {
