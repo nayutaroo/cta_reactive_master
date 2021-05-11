@@ -16,7 +16,7 @@
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
 		D71C2BAB25A7EE6800AE29EE /* NewsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */; };
-		D744906A26466EDD007AFF8A /* MockNewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744906926466EDD007AFF8A /* MockNewsRepository.swift */; };
+		D744906A26466EDD007AFF8A /* NewsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */; };
 		D74B64AC2643BEA400DE3A43 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */; };
 		D74B64AD2643BEA400DE3A43 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */; };
 		D74B64B22643BEEB00DE3A43 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */; };
@@ -25,6 +25,9 @@
 		D74B64C02643C09A00DE3A43 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64BF2643C09A00DE3A43 /* LoginViewModel.swift */; };
 		D74B64C62643C0B500DE3A43 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64C52643C0B500DE3A43 /* SignupViewModel.swift */; };
 		D75F2C0B26496A640086EA43 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */; };
+		D75F2C0D264A4ED00086EA43 /* NewsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F2C0C264A4ECF0086EA43 /* NewsMock.swift */; };
+		D75F2C1F264A95AC0086EA43 /* JsonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F2C1E264A95AC0086EA43 /* JsonString.swift */; };
+		D75F2C21264AA5030086EA43 /* FluxMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F2C20264AA5030086EA43 /* FluxMock.swift */; };
 		D766C5B82644D631002273FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D766C5B72644D631002273FB /* RxCocoa */; };
 		D766C5BA2644D636002273FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D766C5B92644D636002273FB /* RxSwift */; };
 		D766C5BC2644D63D002273FB /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D766C5BB2644D63D002273FB /* RxRelay */; };
@@ -76,7 +79,7 @@
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
-		D744906926466EDD007AFF8A /* MockNewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNewsRepository.swift; sourceTree = "<group>"; };
+		D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepositoryMock.swift; sourceTree = "<group>"; };
 		D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +88,9 @@
 		D74B64BF2643C09A00DE3A43 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D74B64C52643C0B500DE3A43 /* SignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		D75F2C0C264A4ECF0086EA43 /* NewsMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsMock.swift; sourceTree = "<group>"; };
+		D75F2C1E264A95AC0086EA43 /* JsonString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonString.swift; sourceTree = "<group>"; };
+		D75F2C20264AA5030086EA43 /* FluxMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluxMock.swift; sourceTree = "<group>"; };
 		D766C5BF26450F2E002273FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D766C5C526451300002273FB /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		D766C5CD26456B69002273FB /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -224,7 +230,11 @@
 		D744906826466EC3007AFF8A /* Mock */ = {
 			isa = PBXGroup;
 			children = (
-				D744906926466EDD007AFF8A /* MockNewsRepository.swift */,
+				D75F2C1B264A93D10086EA43 /* Data */,
+				D75F2C1E264A95AC0086EA43 /* JsonString.swift */,
+				D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */,
+				D75F2C0C264A4ECF0086EA43 /* NewsMock.swift */,
+				D75F2C20264AA5030086EA43 /* FluxMock.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -272,6 +282,13 @@
 				D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		D75F2C1B264A93D10086EA43 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		D766C5C4264512D5002273FB /* Auth */ = {
@@ -550,9 +567,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D744906A26466EDD007AFF8A /* MockNewsRepository.swift in Sources */,
+				D75F2C21264AA5030086EA43 /* FluxMock.swift in Sources */,
+				D75F2C0D264A4ED00086EA43 /* NewsMock.swift in Sources */,
+				D744906A26466EDD007AFF8A /* NewsRepositoryMock.swift in Sources */,
 				D848D4B325681910008CA221 /* CtaReactiveMasterTests.swift in Sources */,
 				D75F2C0B26496A640086EA43 /* HomeViewModelTests.swift in Sources */,
+				D75F2C1F264A95AC0086EA43 /* JsonString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

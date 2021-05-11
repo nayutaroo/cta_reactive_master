@@ -22,7 +22,7 @@ final class NewsRepositoryStore {
     // 状態として保持しない場合はObservableのみで良い
     let error: Observable<Error>
 
-    private init(dispatcher: NewsRepositoryDispatcher = .shared) {
+    init(dispatcher: NewsRepositoryDispatcher = .shared) {
         self.dispatcher = dispatcher
         error = dispatcher.error.asObservable()
 

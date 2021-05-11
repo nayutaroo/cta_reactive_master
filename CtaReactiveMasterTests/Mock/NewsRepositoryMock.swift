@@ -1,5 +1,5 @@
 //
-//  MockNewsRepository.swift
+//  NewsRepositoryMock.swift
 //  CtaReactiveMasterTests
 //
 //  Created by 化田晃平 on R 3/05/08.
@@ -9,13 +9,17 @@ import Foundation
 @testable import CtaReactiveMaster
 import RxSwift
 
-struct MockNewsRepository: NewsRepository {
+struct NewsRepositoryMock: NewsRepository {
     let apiClient: APIClient
-    let news: News
+
+    init(apiClient: APIClient = .init(decoder: .iso8601)) {
+        self.apiClient = apiClient
+    }
 
     func fetchNews() -> Single<News> {
         Single<News>.create(subscribe: { observer in
-            observer(.success(news))
+            print(News.mock)
+            observer(.success(.mock))
             return Disposables.create()
         })
     }
