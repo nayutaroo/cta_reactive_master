@@ -17,7 +17,7 @@ final class NewsRepositoryActionCreator {
     private let disposeBag = DisposeBag()
     let fetchNews = PublishRelay<Void>()
 
-    private init(dispatcher: NewsRepositoryDispatcher = .shared,
+    init(dispatcher: NewsRepositoryDispatcher = .shared,
                  repository: NewsRepository = NewsRepositoryImpl()) {
         self.dispatcher = dispatcher
         self.repository = repository

@@ -25,7 +25,7 @@ class CtaReactiveMasterTests: XCTestCase {
         ]
 
         let news = News(status: nil, totalResults: nil, articles: articles)
-        let newsRepository = MockNewsRepository(apiClient: APIClient(decoder: JSONDecoder()), news: news)
+        let newsRepository = NewsRepositoryMock(apiClient: APIClient(decoder: JSONDecoder()))
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

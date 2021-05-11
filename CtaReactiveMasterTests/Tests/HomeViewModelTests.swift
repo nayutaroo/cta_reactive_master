@@ -18,7 +18,7 @@ class HomeViewModelTests: XCTestCase {
         let viewModel: HomeViewModel
 
         init() {
-            let flux = Flux.shared
+            let flux: Flux = .mock()
 
             self.actionCreator = flux.newsRepositoryActionCreator
             self.store = flux.newsRepositoryStore
@@ -36,15 +36,19 @@ class HomeViewModelTests: XCTestCase {
     }
 
     func testFetchNews() {
-        let testArticles: [Article] = []
+
+        let news: News = .mock
+        let testArticles: [Article] = news.articles
         var fetchedArticles: [Article] = []
 
         let expect = expectation(description: "waiting viewModel.fetchNews")
         let disposable = dependency.viewModel.articles
+            .skip(1)
             .subscribe(onNext: { articles in
                 fetchedArticles = articles
                 expect.fulfill()
             })
+
         dependency.actionCreator.fetchNews.accept(())
         wait(for: [expect], timeout: 0.1)
         disposable.dispose()
