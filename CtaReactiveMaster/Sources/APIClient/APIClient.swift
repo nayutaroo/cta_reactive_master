@@ -19,10 +19,10 @@ struct APIClient {
             subscribe: { observer in
                 let task = URLSession.shared.dataTask(with: request.url) { (data, response, error) in
                     if let error = error {
-                        observer(.failure(NewsAPIError.unknown(error)))
+                        observer(.failure(APIError.unknown(error)))
                     }
                     guard response as? HTTPURLResponse != nil, let data = data else {
-                        observer(.failure(NewsAPIError.noResponse))
+                        observer(.failure(APIError.noResponse))
                         return
                     }
                     do {
@@ -31,7 +31,7 @@ struct APIClient {
                         observer(.success(model))
                     }
                     catch let error {
-                        observer(.failure(NewsAPIError.decode(error)))
+                        observer(.failure(APIError.decode(error)))
                     }
                 }
                 task.resume()

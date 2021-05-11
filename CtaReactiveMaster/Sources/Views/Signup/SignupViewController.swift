@@ -1,15 +1,15 @@
 //
-//  LoginViewController.swift
+//  SignUpViewController.swift
 //  hack_iOS
 //
-//  Created by 化田 晃平 on 2021/03/09.
+//  Created by 化田晃平 on R 3/03/12.
 //
 
 import UIKit
 import RxCocoa
 import RxSwift
 
-final class LoginViewController: UIViewController, UITextFieldDelegate {
+final class SignupViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet private weak var userNameTextField: UITextField! {
         didSet {
@@ -25,25 +25,25 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    @IBOutlet private weak var loginButton: RoundedButton! {
+    @IBOutlet private weak var signupButton: RoundedButton! {
         didSet {
-            loginButton.setTitle("Login", for: .normal)
+            signupButton.setTitle("Signup", for: .normal)
         }
     }
 
-    @IBOutlet private weak var moveToSignUpViewButton: UIButton! {
+    @IBOutlet private weak var loginButton: UIButton! {
         didSet {
-            moveToSignUpViewButton.setTitle("新規登録画面", for: .normal)
+            loginButton.setTitle("ログイン画面", for: .normal)
         }
     }
 
+    private let authRepository: AuthRepository
+    private let viewModel: SignupViewModelType
     private let disposeBag = DisposeBag()
-    private let viewModel: LoginViewModelType
 
-    init(
-        authRepository: AuthRepository = AuthRepositoryImpl()
-    ) {
-        self.viewModel = LoginViewModel(dependency: .init(authrepository: authRepository))
+    init(authRepository: AuthRepository = AuthRepositoryImpl()) {
+        self.authRepository = authRepository
+        self.viewModel = SignupViewModel(dependency: .init(authrepository: authRepository))
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,6 +54,15 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addRxObsserver()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userNameTextField.resignFirstResponder()
+        return true
     }
 
     private func addRxObsserver() {
@@ -67,16 +76,15 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
 
-        loginButton.rx.tap
+        signupButton.rx.tap
             .bind(to: Binder(self) { me, _ in
-                me.viewModel.input.loginButtonTapped()
+                me.viewModel.input.signupButtonTapped()
             })
             .disposed(by: disposeBag)
 
-        // サインアップ画面へ遷移
-        moveToSignUpViewButton.rx.tap
+        loginButton.rx.tap
             .subscribe(Binder(self) { me, _ in
-                me.viewModel.input.signupButtonTapped()
+                me.viewModel.input.loginButtonTapped()
             })
             .disposed(by: disposeBag)
 
@@ -89,8 +97,8 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
                     let navVC = UINavigationController(rootViewController: rootVC)
                     navVC.modalPresentationStyle = .fullScreen
                     me.present(navVC, animated: true)
-                case .signup:
-                    let rootVC = SignupViewController()
+                case .login:
+                    let rootVC = LoginViewController()
                     rootVC.modalPresentationStyle = .fullScreen
                     me.present(rootVC, animated: true)
                 case .showAlert(let message):
@@ -100,14 +108,5 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
             })
             .disposed(by: disposeBag)
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        userNameTextField.resignFirstResponder()
-        return true
     }
 }
