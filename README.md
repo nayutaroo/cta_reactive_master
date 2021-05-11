@@ -1,5 +1,8 @@
 # cta_reactive_master
 
+<img src="https://user-images.githubusercontent.com/59905087/117824495-7fe71580-b2a9-11eb-92ca-c9bcd6665fff.png" width="300">
+
+
 CA Tech AccelでiOSアプリ開発におけるReactiveを理解していく学習リポジトリ
 
 ## Setup
