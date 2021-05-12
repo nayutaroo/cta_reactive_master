@@ -231,7 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				D75F2C1B264A93D10086EA43 /* Data */,
-				D75F2C1E264A95AC0086EA43 /* JsonString.swift */,
 				D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */,
 				D75F2C0C264A4ECF0086EA43 /* NewsMock.swift */,
 				D75F2C20264AA5030086EA43 /* FluxMock.swift */,
@@ -287,6 +286,7 @@
 		D75F2C1B264A93D10086EA43 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D75F2C1E264A95AC0086EA43 /* JsonString.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
