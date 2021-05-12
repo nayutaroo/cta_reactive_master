@@ -9,6 +9,7 @@ xcuserdata
 /Pods/*
 /DerivedData
 /CtaReactiveMaster/Resources/Key.plist
+/CtaReactiveMasterTests/Mock/Data/JsonString.swift
 
 # Bundler
 .bundle/

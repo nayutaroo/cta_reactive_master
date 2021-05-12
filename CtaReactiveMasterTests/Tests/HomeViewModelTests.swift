@@ -5,8 +5,8 @@
 //  Created by 化田晃平 on R 3/05/10.
 //
 
-import XCTest
 @testable import CtaReactiveMaster
+import XCTest
 
 class HomeViewModelTests: XCTestCase {
 
