@@ -16,7 +16,6 @@ final class HomeViewModel {
     @PublishRelayInput var refresh: Observable<Void>
     @PublishRelayInput var tapMenuButton: Observable<Void>
     @PublishRelayInput var selectArticle: Observable<URL?>
-
     @BehaviorRelayOutput(value: .initial) private(set) var transitionState: TransitionState
 
     private let disposeBag = DisposeBag()

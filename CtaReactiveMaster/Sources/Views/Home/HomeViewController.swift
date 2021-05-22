@@ -25,6 +25,7 @@ final class HomeViewController: UIViewController {
     }
 
     private var menuButton: UIBarButtonItem!
+    private var sideMenuViewController: SideMenuViewController!
 
     private let disposeBag = DisposeBag()
     private let viewModel: HomeViewModel
@@ -41,7 +42,7 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewSetup()
+        setupView()
         addRxObserver()
         viewModel.$viewDidLoad.accept(())
     }
@@ -75,7 +76,7 @@ final class HomeViewController: UIViewController {
                     me.present(SFSafariViewController(url: url), animated: true)
                 case .sideMenu:
                     // TODO: サイドメニューの表示
-                    me.showSideMenu()
+                    me.showSideMenu(animated: true)
                 default:
                     break
                 }
@@ -111,9 +112,14 @@ final class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func viewSetup() {
+    private func setupView() {
+
         menuButton = UIBarButtonItem(image: UIImage(systemName: "menubar.rectangle"), style: .plain, target: nil, action: nil)
         menuButton.tintColor = .init(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
+
+        sideMenuViewController = .init()
+        sideMenuViewController.delegate = self
+        sideMenuViewController.startPanGestureRecognizing()
 
         navigationItem.leftBarButtonItem = menuButton
         navigationItem.title = "NewsAPI"
@@ -125,7 +131,48 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = UIColor.brown
     }
 
-    private func showSideMenu() {
+    private func showSideMenu(contentAvailability: Bool = true, animated: Bool) {
         print("サイドメニューの表示")
+
+        guard let navigationController = self.navigationController else { return }
+        navigationController.addChild(sideMenuViewController)
+        sideMenuViewController.view.autoresizingMask = .flexibleHeight
+        sideMenuViewController.view.frame = view.bounds
+        navigationController.view.addSubview(sideMenuViewController.view)
+        sideMenuViewController.didMove(toParent: self)
+
+        if contentAvailability {
+            sideMenuViewController.showContentView(animated: true)
+        }
+    }
+
+    private func hideSideMenu(animated: Bool) {
+        sideMenuViewController.hideContentView(animated: animated) { _ in
+            self.sideMenuViewController.willMove(toParent: nil)
+            self.sideMenuViewController.removeFromParent()
+            self.sideMenuViewController.view.removeFromSuperview()
+        }
+    }
+}
+
+extension HomeViewController: SideMenuViewControllerDelegate {
+    func parentViewControllerForSideMenuViewController(_ sidemenuViewController: SideMenuViewController) -> UIViewController {
+        return self
+    }
+
+    func shouldPresentForSideMenuViewController(_ sidemenuViewController: SideMenuViewController) -> Bool {
+        return true
+    }
+
+    func sideMenuViewControllerDidRequestShowing(_ sidemenuViewController: SideMenuViewController, contentAvailability: Bool, animated: Bool) {
+        showSideMenu(contentAvailability: contentAvailability, animated: animated)
+    }
+
+    func sideMenuViewControllerDidRequestHiding(_ sidemenuViewController: SideMenuViewController, animated: Bool) {
+        hideSideMenu(animated: animated)
+    }
+
+    func sideMenuViewController(_ sidemenuViewController: SideMenuViewController, didSelectItemAt indexPath: IndexPath) {
+        hideSideMenu(animated: true)
     }
 }
