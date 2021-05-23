@@ -15,5 +15,5 @@ final class NewsRepositoryDispatcher {
     let isFetching = PublishRelay<Bool>()
     let error = PublishRelay<Error>()
 
-    private init() {}
+    init() {}
 }

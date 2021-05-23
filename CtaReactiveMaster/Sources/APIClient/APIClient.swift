@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-struct APIClient {
+public struct APIClient {
     let decoder: JSONDecoder
 
     // 返り値にSingle型を用いるのは APIの結果を.success, .failureのいずれかで通知させたいから。
@@ -26,6 +26,7 @@ struct APIClient {
                         return
                     }
                     do {
+//                        print(String(data: data, encoding: .utf8)!)
                         // Responseはstaticなので T.をつけて利用
                         let model = try decoder.decode(T.Response.self, from: data)
                         observer(.success(model))

@@ -29,7 +29,7 @@ enum Endpoint {
 enum Key {
     static var newsApi: String {
         // プロジェクト内のKey.plistのパスを取得
-        guard let filePath = Bundle.main.path(forResource: "Key", ofType: "plist")  else {
+        guard let filePath = Bundle.main.path(forResource: "Key", ofType: "plist") else {
             // returnで返さずとも処理を停止させられる
             fatalError("can't get filepath")
         }
