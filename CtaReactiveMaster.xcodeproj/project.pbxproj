@@ -16,6 +16,7 @@
 		D71C2B7C25A5426B00AE29EE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */; };
 		D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82796DED2569247500443E2F /* HomeViewController.swift */; };
 		D71C2BAB25A7EE6800AE29EE /* NewsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */; };
+		D7339136265920F8002A52A6 /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7339135265920F7002A52A6 /* SideMenuViewModel.swift */; };
 		D744906A26466EDD007AFF8A /* NewsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */; };
 		D74B64AC2643BEA400DE3A43 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */; };
 		D74B64AD2643BEA400DE3A43 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */; };
@@ -81,6 +82,7 @@
 		D71C2B7925A5426B00AE29EE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		D71C2B7A25A5426B00AE29EE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
+		D7339135265920F7002A52A6 /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
 		D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepositoryMock.swift; sourceTree = "<group>"; };
 		D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 			children = (
 				D7EC900D2650BB4000CA9855 /* SideMenuViewController.swift */,
 				D7EC900E2650BB4000CA9855 /* SideMenuViewController.xib */,
+				D7339135265920F7002A52A6 /* SideMenuViewModel.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				D711C14D25F24CA400557BDD /* HomeViewModel.swift in Sources */,
 				D7F2C4AF25B575DA00083499 /* Language.swift in Sources */,
 				D74B64AC2643BEA400DE3A43 /* LoginViewController.swift in Sources */,
+				D7339136265920F8002A52A6 /* SideMenuViewModel.swift in Sources */,
 				D711C15C25F2615100557BDD /* UIActivityIndicatorView+.swift in Sources */,
 				D7F2C4B325B591C500083499 /* JSONDecoder+.swift in Sources */,
 				D773E4AE2617295000E710DB /* NewsRepositoryDispatcher.swift in Sources */,
