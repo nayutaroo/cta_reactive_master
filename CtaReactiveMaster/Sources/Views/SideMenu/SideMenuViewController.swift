@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 
-//TODO: AnyObjectをつける意味は？
 protocol SideMenuViewControllerDelegate: AnyObject {
     func parentViewControllerForSideMenuViewController(_ sideMenuViewController: SideMenuViewController) -> UIViewController
     func shouldPresentForSideMenuViewController(_ sideMenuViewController: SideMenuViewController) -> Bool
