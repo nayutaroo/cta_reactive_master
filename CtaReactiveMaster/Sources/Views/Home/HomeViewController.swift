@@ -114,7 +114,7 @@ final class HomeViewController: UIViewController {
 
     private func setupView() {
 
-        menuButton = UIBarButtonItem(image: UIImage(systemName: "menubar.rectangle"), style: .plain, target: nil, action: nil)
+        menuButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: nil, action: nil)
         menuButton.tintColor = .init(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
 
         sideMenuViewController = .init()
