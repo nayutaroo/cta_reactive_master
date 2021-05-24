@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxRelay
 import RxSwift
 
 protocol SideMenuViewControllerDelegate: AnyObject {
@@ -16,6 +17,7 @@ protocol SideMenuViewControllerDelegate: AnyObject {
 }
 
 class SideMenuViewController: UIViewController {
+
     private let contentView: UIView = .init(frame: .zero)
     private var textField: UITextField = .init(frame: .zero)
     private let button: UIButton = .init(frame: .zero)
@@ -26,6 +28,8 @@ class SideMenuViewController: UIViewController {
     private var beganLocation: CGPoint = .zero
     private var beganState: Bool = false
 
+    private let viewModel: SideMenuViewModel
+
     private var contentMaxWidth: CGFloat {
         return view.bounds.width * 0.8
     }
@@ -34,9 +38,19 @@ class SideMenuViewController: UIViewController {
         self.parent != nil
     }
 
+    init(viewModel: SideMenuViewModel = .init()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        addRxObserver()
     }
 
     func showContentView(animated: Bool) {
@@ -95,6 +109,31 @@ class SideMenuViewController: UIViewController {
         }
     }
 
+    private func addRxObserver() {
+
+        textField.rx.text.orEmpty.asObservable()
+            .bind(to: viewModel.searchText)
+            .disposed(by: disposeBag)
+
+        textField.rx.controlEvent(.editingDidEnd)
+            .subscribe( Binder(self) { me, _ in
+                me.textField.resignFirstResponder()
+            })
+            .disposed(by: disposeBag)
+
+        button.rx.tap
+            .bind(to: Binder(self) { me, _ in
+                me.viewModel.$tapSearchButton.accept(())
+                me.hideContentView(animated: true) { [weak self] _ in
+                    guard let me = self else { return }
+                    me.willMove(toParent: nil)
+                    me.removeFromParent()
+                    me.view.removeFromSuperview()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func setupView() {
 
         var contentRect = view.bounds
@@ -129,7 +168,6 @@ class SideMenuViewController: UIViewController {
         button.setTitle("検索", for: .normal)
         contentView.addSubview(button)
 
-
         let tapGestureRecognizer = UITapGestureRecognizer()
         tapGestureRecognizer.delegate = self
 
@@ -153,7 +191,6 @@ class SideMenuViewController: UIViewController {
     }
 
     private func handledPanGestureRecognizer(_ panGestureRecognizer: UIPanGestureRecognizer) {
-
         guard let shouldPresent = self.delegate?.shouldPresentForSideMenuViewController(self), shouldPresent else  {
             return
         }
@@ -196,13 +233,7 @@ class SideMenuViewController: UIViewController {
 }
 
 extension SideMenuViewController: UIGestureRecognizerDelegate {
-
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view != self.contentView {
-            return true
-        }
-        else {
-            return false
-        }
+        return touch.view != self.contentView
     }
 }

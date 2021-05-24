@@ -10,7 +10,7 @@ import Foundation
 // NewsAPIのエンドポイントのパス
 enum Endpoint {
     case topHeadlines(Country, Category)
-    case everything(Language)
+    case everything(String)
     case sources(Country, Language, Category)
 
     func path() -> String {
@@ -61,9 +61,10 @@ struct NewsAPIRequest: Requestable {
                 URLQueryItem(name: "apiKey", value: Key.newsApi)
             ]
 
-        case let .everything(language):
+        case let .everything(keyword):
             baseURL.queryItems = [
-                URLQueryItem(name: "language", value: language.rawValue),
+                URLQueryItem(name: "qInTitle", value: keyword),
+                URLQueryItem(name: "sortBy", value: "publishedAt"),
                 URLQueryItem(name: "apiKey", value: Key.newsApi)
             ]
 
