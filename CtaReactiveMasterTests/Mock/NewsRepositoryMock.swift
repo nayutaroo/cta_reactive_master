@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 struct NewsRepositoryMock: NewsRepository {
+
     let apiClient: APIClient
 
     init(apiClient: APIClient = .init(decoder: .iso8601)) {
@@ -17,6 +18,14 @@ struct NewsRepositoryMock: NewsRepository {
     }
 
     func fetchNews() -> Single<News> {
+        createMockNews()
+    }
+
+    func searchNews(_ keyword: String) -> Single<News> {
+        createMockNews()
+    }
+
+    private func createMockNews() -> Single<News> {
         Single<News>.create(subscribe: { observer in
             print(News.mock)
             observer(.success(.mock))
