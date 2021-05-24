@@ -14,12 +14,21 @@ final class HomeViewModel {
     @PublishRelayInput var viewDidLoad: Observable<Void>
     @PublishRelayInput var retryFetch: Observable<Void>
     @PublishRelayInput var refresh: Observable<Void>
+    @PublishRelayInput var tapMenuButton: Observable<Void>
+    @PublishRelayInput var selectArticle: Observable<URL?>
+    @BehaviorRelayOutput(value: .initial) private(set) var transitionState: TransitionState
 
     private let disposeBag = DisposeBag()
 
     let articles: Observable<[Article]>
     let isFetching: Observable<Bool>
     let error: Observable<Error>
+
+    enum TransitionState {
+        case initial
+        case sideMenu
+        case detail(url: URL?)
+    }
 
     init(flux: Flux = .shared) {
 
@@ -45,6 +54,20 @@ final class HomeViewModel {
         Observable.merge(viewDidLoad, refresh, retryFetch)
             .subscribe(onNext: {
                 newsActionCreator.fetchNews.accept(())
+            })
+            .disposed(by: disposeBag)
+
+        selectArticle
+            .withUnretained(self)
+            .subscribe(onNext: { me, url in
+                me.transitionState = .detail(url: url)
+            })
+            .disposed(by: disposeBag)
+
+        tapMenuButton
+            .withUnretained(self)
+            .subscribe(onNext: { me, _ in
+                me.transitionState = .sideMenu
             })
             .disposed(by: disposeBag)
     }

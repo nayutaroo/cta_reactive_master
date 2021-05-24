@@ -24,6 +24,9 @@ final class HomeViewController: UIViewController {
         }
     }
 
+    private var menuButton: UIBarButtonItem!
+    private var sideMenuViewController: SideMenuViewController!
+
     private let disposeBag = DisposeBag()
     private let viewModel: HomeViewModel
     private let refreshControl = UIRefreshControl()
@@ -39,12 +42,19 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewSetup()
+        setupView()
         addRxObserver()
         viewModel.$viewDidLoad.accept(())
     }
 
     private func addRxObserver() {
+
+        menuButton.rx.tap
+            .bind(to: Binder(self) { me, _ in
+                me.viewModel.$tapMenuButton.accept(())
+            })
+            .disposed(by: disposeBag)
+
         tableView.refreshControl?.rx.controlEvent(.valueChanged)
             .bind(to: Binder(self) { me, _ in
                 me.viewModel.$refresh.accept(())
@@ -53,10 +63,23 @@ final class HomeViewController: UIViewController {
 
         tableView.rx.modelSelected(Article.self)
             .bind(to: Binder(self) { me, article in
-                guard let urlString = article.url, let url = URL(string: urlString) else {
-                    return
+                guard let urlString = article.url else { return }
+                me.viewModel.$selectArticle.accept(URL(string: urlString))
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.$transitionState
+            .bind(to: Binder(self) { me, state in
+                switch state {
+                case .detail(let url):
+                    guard let url = url else { return }
+                    me.present(SFSafariViewController(url: url), animated: true)
+                case .sideMenu:
+                    // TODO: サイドメニューの表示
+                    me.showSideMenu(animated: true)
+                default:
+                    break
                 }
-                me.present(SFSafariViewController(url: url), animated: true)
             })
             .disposed(by: disposeBag)
 
@@ -89,7 +112,16 @@ final class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func viewSetup() {
+    private func setupView() {
+
+        menuButton = UIBarButtonItem(image: UIImage(systemName: "menubar.rectangle"), style: .plain, target: nil, action: nil)
+        menuButton.tintColor = .init(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
+
+        sideMenuViewController = .init()
+        sideMenuViewController.delegate = self
+        sideMenuViewController.startPanGestureRecognizing()
+
+        navigationItem.leftBarButtonItem = menuButton
         navigationItem.title = "NewsAPI"
         navigationController?.navigationBar.titleTextAttributes
             = [
@@ -97,5 +129,50 @@ final class HomeViewController: UIViewController {
                 NSAttributedString.Key.foregroundColor: UIColor(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
             ]
         navigationController?.navigationBar.backgroundColor = UIColor.brown
+    }
+
+    private func showSideMenu(contentAvailability: Bool = true, animated: Bool) {
+        print("サイドメニューの表示")
+
+        guard let navigationController = self.navigationController else { return }
+        navigationController.addChild(sideMenuViewController)
+        sideMenuViewController.view.autoresizingMask = .flexibleHeight
+        sideMenuViewController.view.frame = view.bounds
+        navigationController.view.addSubview(sideMenuViewController.view)
+        sideMenuViewController.didMove(toParent: self)
+
+        if contentAvailability {
+            sideMenuViewController.showContentView(animated: true)
+        }
+    }
+
+    private func hideSideMenu(animated: Bool) {
+        sideMenuViewController.hideContentView(animated: animated) { _ in
+            self.sideMenuViewController.willMove(toParent: nil)
+            self.sideMenuViewController.removeFromParent()
+            self.sideMenuViewController.view.removeFromSuperview()
+        }
+    }
+}
+
+extension HomeViewController: SideMenuViewControllerDelegate {
+    func parentViewControllerForSideMenuViewController(_ sidemenuViewController: SideMenuViewController) -> UIViewController {
+        return self
+    }
+
+    func shouldPresentForSideMenuViewController(_ sidemenuViewController: SideMenuViewController) -> Bool {
+        return true
+    }
+
+    func sideMenuViewControllerDidRequestShowing(_ sidemenuViewController: SideMenuViewController, contentAvailability: Bool, animated: Bool) {
+        showSideMenu(contentAvailability: contentAvailability, animated: animated)
+    }
+
+    func sideMenuViewControllerDidRequestHiding(_ sidemenuViewController: SideMenuViewController, animated: Bool) {
+        hideSideMenu(animated: animated)
+    }
+
+    func sideMenuViewController(_ sidemenuViewController: SideMenuViewController, didSelectItemAt indexPath: IndexPath) {
+        hideSideMenu(animated: true)
     }
 }
