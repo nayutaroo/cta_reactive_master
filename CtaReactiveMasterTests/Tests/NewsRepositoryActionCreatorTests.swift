@@ -1,48 +1,44 @@
 //
-//  HomeViewModelTests.swift
+//  NewsRepositoryActionCreatorTests.swift
 //  CtaReactiveMasterTests
 //
-//  Created by 化田晃平 on R 3/05/10.
+//  Created by 化田晃平 on R 3/05/27.
 //
 
-@testable import CtaReactiveMaster
 import XCTest
+@testable import CtaReactiveMaster
 
-class HomeViewModelTests: XCTestCase {
+class NewsRepositoryActionCreatorTests: XCTestCase {
 
     private struct Dependency {
         let actionCreator: NewsRepositoryActionCreator
-        let store: NewsRepositoryStore
         let dispatcher: NewsRepositoryDispatcher
-
-        let viewModel: HomeViewModel
 
         init() {
             let flux: Flux = .mock()
 
-            self.viewModel = HomeViewModel(flux: flux)
             self.actionCreator = flux.newsRepositoryActionCreator
-            self.store = flux.newsRepositoryStore
             self.dispatcher = flux.newsRepositoryDispatcher
         }
     }
-
     private var dependency: Dependency!
 
     override func setUp() {
+        self.dependency = Dependency()
         super.setUp()
-        dependency = Dependency()
     }
 
-    func testFetchNews() {
+    override func tearDown() {
+        super.tearDown()
+    }
 
+    func testFetchNews() throws {
         let news: News = .mock
         let testArticles: [Article] = news.articles
         var fetchedArticles: [Article] = []
 
-        let expect = expectation(description: "waiting viewModel.fetchNews")
-        let disposable = dependency.viewModel.articles
-            .skip(1)
+        let expect = expectation(description: "waiting actionCreator.fetchNews")
+        let disposable = dependency.dispatcher.articles
             .subscribe(onNext: { articles in
                 fetchedArticles = articles
                 expect.fulfill()

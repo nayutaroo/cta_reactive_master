@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxGesture
 import SafariServices
 
 final class HomeViewController: UIViewController {
