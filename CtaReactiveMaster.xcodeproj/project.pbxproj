@@ -21,6 +21,7 @@
 		D745B235265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D745B234265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift */; };
 		D745B238265F638B00DEB589 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = D745B237265F638B00DEB589 /* RxGesture */; };
 		D745B23A265F955E00DEB589 /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D745B239265F955D00DEB589 /* HomeDataSource.swift */; };
+		D745B23C265FC9E200DEB589 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D745B23B265FC9E200DEB589 /* UITableView+.swift */; };
 		D74B64AC2643BEA400DE3A43 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */; };
 		D74B64AD2643BEA400DE3A43 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */; };
 		D74B64B22643BEEB00DE3A43 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */; };
@@ -89,6 +90,7 @@
 		D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepositoryMock.swift; sourceTree = "<group>"; };
 		D745B234265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepositoryActionCreatorTests.swift; sourceTree = "<group>"; };
 		D745B239265F955D00DEB589 /* HomeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
+		D745B23B265FC9E200DEB589 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				D796542B2635170D008F1837 /* BehaviorRelayOutput.swift */,
 				D771BF0B263D93F200E10E0C /* PublishRelayInput.swift */,
 				D766C5CF26456CBF002273FB /* UIView+.swift */,
+				D745B23B265FC9E200DEB589 /* UITableView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				D711C16225F2F6D600557BDD /* UIViewController+.swift in Sources */,
 				D766C5CE26456B69002273FB /* RoundedButton.swift in Sources */,
 				D71C2B8D25A5CEF500AE29EE /* HomeViewController.swift in Sources */,
+				D745B23C265FC9E200DEB589 /* UITableView+.swift in Sources */,
 				D773E4B226172A2B00E710DB /* NewsRepositoryStore.swift in Sources */,
 				D74B64C02643C09A00DE3A43 /* LoginViewModel.swift in Sources */,
 				D7F2C4A425B575AE00083499 /* Category.swift in Sources */,

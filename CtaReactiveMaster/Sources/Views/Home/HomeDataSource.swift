@@ -16,18 +16,13 @@ final class HomeDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.identifier, for: indexPath)
-
-//        cell.rx.longPressGesture()
-//            .when(.began)
-//            .subscribe(onNext: { [weak self] gesture in
-//                let location = gesture.location(in: self?.tableView)
-//                let row = self?.tableView.indexPathForRow(at: location)
-//                print("longPress \(row)")
-//            })
-//            .disposed(by: )
-            
-        
+        let cell = tableView.dequeue(NewsTableViewCell.self , indexPath: indexPath)
+        cell.rx.longPressGesture()
+            .when(.began)
+            .subscribe(onNext: { gesture in
+                cell.isFavorited.toggle()
+            })
+            .disposed(by: cell.disposeBag)
         return cell
     }
 }
