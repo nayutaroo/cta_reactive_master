@@ -9,9 +9,14 @@
 
 extension Flux {
     static func mock(newsRepositoryMock: NewsRepositoryMock = .init()) -> Flux {
-        let newsRepositoryActionCreator: NewsRepositoryActionCreator = .init(repository: newsRepositoryMock)
-        let newsRepositoryDispatcher: NewsRepositoryDispatcher = .init()
-        let newsRepositoryStore: NewsRepositoryStore = .init()
+        let newsRepositoryDispatcher = NewsRepositoryDispatcher()
+        let newsRepositoryActionCreator = NewsRepositoryActionCreator(
+            dispatcher: newsRepositoryDispatcher,
+            repository: newsRepositoryMock
+        )
+        let newsRepositoryStore = NewsRepositoryStore(
+            dispatcher: newsRepositoryDispatcher
+        )
 
         return .init(
             newsRepositoryActionCreator: newsRepositoryActionCreator,

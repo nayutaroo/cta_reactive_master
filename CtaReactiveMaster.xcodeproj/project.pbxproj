@@ -18,6 +18,9 @@
 		D71C2BAB25A7EE6800AE29EE /* NewsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */; };
 		D7339136265920F8002A52A6 /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7339135265920F7002A52A6 /* SideMenuViewModel.swift */; };
 		D744906A26466EDD007AFF8A /* NewsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */; };
+		D745B235265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D745B234265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift */; };
+		D745B238265F638B00DEB589 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = D745B237265F638B00DEB589 /* RxGesture */; };
+		D745B23A265F955E00DEB589 /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D745B239265F955D00DEB589 /* HomeDataSource.swift */; };
 		D74B64AC2643BEA400DE3A43 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */; };
 		D74B64AD2643BEA400DE3A43 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */; };
 		D74B64B22643BEEB00DE3A43 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */; };
@@ -84,6 +87,8 @@
 		D71C2BAA25A7EE6800AE29EE /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
 		D7339135265920F7002A52A6 /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
 		D744906926466EDD007AFF8A /* NewsRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepositoryMock.swift; sourceTree = "<group>"; };
+		D745B234265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepositoryActionCreatorTests.swift; sourceTree = "<group>"; };
+		D745B239265F955D00DEB589 /* HomeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
 		D74B64AA2643BEA400DE3A43 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D74B64AB2643BEA400DE3A43 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		D74B64B02643BEEB00DE3A43 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +141,7 @@
 				D766C5C326451218002273FB /* FirebaseAuth in Frameworks */,
 				D766C5BC2644D63D002273FB /* RxRelay in Frameworks */,
 				D766C5BA2644D636002273FB /* RxSwift in Frameworks */,
+				D745B238265F638B00DEB589 /* RxGesture in Frameworks */,
 				D766C5B82644D631002273FB /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +193,7 @@
 				82796DEE2569247500443E2F /* HomeViewController.xib */,
 				82796DED2569247500443E2F /* HomeViewController.swift */,
 				D711C14C25F24CA400557BDD /* HomeViewModel.swift */,
+				D745B239265F955D00DEB589 /* HomeDataSource.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -286,6 +293,7 @@
 			children = (
 				D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */,
 				D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */,
+				D745B234265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -431,6 +439,7 @@
 				D766C5BB2644D63D002273FB /* RxRelay */,
 				D766C5BD2644D642002273FB /* Kingfisher */,
 				D766C5C226451218002273FB /* FirebaseAuth */,
+				D745B237265F638B00DEB589 /* RxGesture */,
 			);
 			productName = CtaReactiveMaster;
 			productReference = D848D4982568190F008CA221 /* CtaReactiveMaster.app */;
@@ -485,6 +494,7 @@
 				D7519A4B260E31D9000E0B78 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				D7519A5A260E328D000E0B78 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D766C5C126451218002273FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D745B236265F638A00DEB589 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = D848D4992568190F008CA221 /* Products */;
 			projectDirPath = "";
@@ -560,6 +570,7 @@
 				D794061F25B2B419006B8444 /* Requestable.swift in Sources */,
 				D796542C2635170D008F1837 /* BehaviorRelayOutput.swift in Sources */,
 				D773E4B626172A9200E710DB /* Flux.swift in Sources */,
+				D745B23A265F955E00DEB589 /* HomeDataSource.swift in Sources */,
 				D766C5C626451300002273FB /* FirebaseAuth.swift in Sources */,
 				D848D49E2568190F008CA221 /* SceneDelegate.swift in Sources */,
 				D773E4A52617288000E710DB /* NewsRepositoryActionCreator.swift in Sources */,
@@ -593,6 +604,7 @@
 				D848D4B325681910008CA221 /* CtaReactiveMasterTests.swift in Sources */,
 				D75F2C0B26496A640086EA43 /* HomeViewModelTests.swift in Sources */,
 				D75F2C1F264A95AC0086EA43 /* JsonString.swift in Sources */,
+				D745B235265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -861,6 +873,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D745B236265F638A00DEB589 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.2;
+			};
+		};
 		D7519A4B260E31D9000E0B78 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -888,6 +908,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D745B237265F638B00DEB589 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D745B236265F638A00DEB589 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
 		D766C5B72644D631002273FB /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D7519A4B260E31D9000E0B78 /* XCRemoteSwiftPackageReference "RxSwift" */;
