@@ -8,6 +8,7 @@
 import UIKit
 import RxRelay
 import RxSwift
+import RxGesture
 
 protocol SideMenuViewControllerDelegate: AnyObject {
     func parentViewControllerForSideMenuViewController(_ sideMenuViewController: SideMenuViewController) -> UIViewController
@@ -37,6 +38,7 @@ class SideMenuViewController: UIViewController {
     private var isShown: Bool {
         self.parent != nil
     }
+
 
     init(viewModel: SideMenuViewModel = .init()) {
         self.viewModel = viewModel
@@ -132,6 +134,17 @@ class SideMenuViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+
+        view.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .filter { me, gesture in
+                return gesture.location(in: me.contentView).x > me.contentView.bounds.maxX
+            }
+            .subscribe(onNext: { me, _ in
+                me.tapBackground()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupView() {
@@ -167,18 +180,6 @@ class SideMenuViewController: UIViewController {
         button.setTitleColor(.blue, for: .normal)
         button.setTitle("検索", for: .normal)
         contentView.addSubview(button)
-
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        tapGestureRecognizer.delegate = self
-
-        tapGestureRecognizer.rx.event
-            .withUnretained(self)
-            .subscribe(onNext: { me, _ in
-                me.tapBackground()
-            })
-            .disposed(by: disposeBag)
-
-        view.addGestureRecognizer(tapGestureRecognizer)
     }
 
     private func tapBackground() {
@@ -191,7 +192,7 @@ class SideMenuViewController: UIViewController {
     }
 
     private func handledPanGestureRecognizer(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        guard let shouldPresent = self.delegate?.shouldPresentForSideMenuViewController(self), shouldPresent else  {
+        guard let shouldPresent = self.delegate?.shouldPresentForSideMenuViewController(self), shouldPresent else {
             return
         }
 
@@ -229,11 +230,5 @@ class SideMenuViewController: UIViewController {
         default:
             break
         }
-    }
-}
-
-extension SideMenuViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view != self.contentView
     }
 }

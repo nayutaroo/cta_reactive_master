@@ -6,6 +6,7 @@
 //
 
 import Kingfisher
+import RxSwift
 import UIKit
 
 final class NewsTableViewCell: UITableViewCell {
@@ -13,6 +14,7 @@ final class NewsTableViewCell: UITableViewCell {
     @IBOutlet private weak var publishedAtLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var favoriteIconImageView: UIImageView!
 
     static var identifier: String {
         String(describing: self)
@@ -20,6 +22,13 @@ final class NewsTableViewCell: UITableViewCell {
 
     static var nib: UINib {
         UINib(nibName: identifier, bundle: nil)
+    }
+
+    var disposeBag = DisposeBag()
+    var isFavorited: Bool = false {
+        didSet {
+            favoriteIconImageView.image = isFavorited ? #imageLiteral(resourceName: "red_heart") : nil
+        }
     }
 
     override func prepareForReuse() {
