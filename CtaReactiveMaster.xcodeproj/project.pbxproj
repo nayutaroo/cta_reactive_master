@@ -62,7 +62,6 @@
 		D848D49E2568190F008CA221 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848D49D2568190F008CA221 /* SceneDelegate.swift */; };
 		D848D4A525681910008CA221 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D848D4A425681910008CA221 /* Assets.xcassets */; };
 		D848D4A825681910008CA221 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D848D4A625681910008CA221 /* LaunchScreen.storyboard */; };
-		D848D4B325681910008CA221 /* CtaReactiveMasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,7 +127,6 @@
 		D848D4A725681910008CA221 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D848D4A925681910008CA221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D848D4AE25681910008CA221 /* CtaReactiveMasterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CtaReactiveMasterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtaReactiveMasterTests.swift; sourceTree = "<group>"; };
 		D848D4B425681910008CA221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -291,7 +289,6 @@
 		D75F2C0926496A400086EA43 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				D848D4B225681910008CA221 /* CtaReactiveMasterTests.swift */,
 				D75F2C0A26496A640086EA43 /* HomeViewModelTests.swift */,
 				D745B234265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift */,
 			);
@@ -601,7 +598,6 @@
 				D75F2C21264AA5030086EA43 /* FluxMock.swift in Sources */,
 				D75F2C0D264A4ED00086EA43 /* NewsMock.swift in Sources */,
 				D744906A26466EDD007AFF8A /* NewsRepositoryMock.swift in Sources */,
-				D848D4B325681910008CA221 /* CtaReactiveMasterTests.swift in Sources */,
 				D75F2C0B26496A640086EA43 /* HomeViewModelTests.swift in Sources */,
 				D75F2C1F264A95AC0086EA43 /* JsonString.swift in Sources */,
 				D745B235265F599300DEB589 /* NewsRepositoryActionCreatorTests.swift in Sources */,

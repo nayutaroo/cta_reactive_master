@@ -101,6 +101,7 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
             .flatMap { $0.error.map(Observable.just) ?? .empty() }
             .subscribe( Binder(self) { me, error in
                 me.transitionStateRelay.accept(.showAlert(message: "ログインに失敗しました"))
+                print(error)
             })
             .disposed(by: disposeBag)
 

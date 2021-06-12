@@ -17,7 +17,6 @@ final class HomeDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.identifier, for: indexPath)
-
 //        cell.rx.longPressGesture()
 //            .when(.began)
 //            .subscribe(onNext: { [weak self] gesture in
@@ -26,8 +25,6 @@ final class HomeDataSource: NSObject, UITableViewDataSource {
 //                print("longPress \(row)")
 //            })
 //            .disposed(by: )
-            
-        
         return cell
     }
 }

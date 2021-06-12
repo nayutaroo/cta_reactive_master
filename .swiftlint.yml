@@ -5,6 +5,7 @@ excluded:
   - Tests/SwiftLintFrameworkTests/Resources
 disabled_rules:
   - identifier_name
+  - unused_optional_binding
 opt_in_rules:
   - empty_count
   - file_header
@@ -24,6 +25,8 @@ opt_in_rules:
   - prohibited_super_call
   - fatal_error_message
 
-line_length: 120
+line_length: 200
+function_body_length: 100
+
 number_separator:
   minimum_length: 5

@@ -5,11 +5,11 @@
 //  Created by Takuma Osada on 2020/11/21.
 //
 
-import UIKit
 import RxCocoa
-import RxSwift
 import RxGesture
+import RxSwift
 import SafariServices
+import UIKit
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {
@@ -49,7 +49,6 @@ final class HomeViewController: UIViewController {
     }
 
     private func addRxObserver() {
-
         menuButton.rx.tap
             .bind(to: Binder(self) { me, _ in
                 me.viewModel.$tapMenuButton.accept(())
@@ -76,7 +75,6 @@ final class HomeViewController: UIViewController {
                     guard let url = url else { return }
                     me.present(SFSafariViewController(url: url), animated: true)
                 case .sideMenu:
-                    // TODO: サイドメニューの表示
                     me.showSideMenu(animated: true)
                 default:
                     break
@@ -114,10 +112,8 @@ final class HomeViewController: UIViewController {
     }
 
     private func setupView() {
-
         menuButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: nil, action: nil)
-        menuButton.tintColor = .init(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
-
+        menuButton.tintColor = #colorLiteral(red: 0.0862745098, green: 0.2431372549, blue: 0.4039215686, alpha: 1)
         sideMenuViewController = .init()
         sideMenuViewController.delegate = self
         sideMenuViewController.startPanGestureRecognizing()
@@ -127,14 +123,12 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes
             = [
                 NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!,
-                NSAttributedString.Key.foregroundColor: UIColor(red: 22/255, green: 61/255, blue: 103/255, alpha: 1.0)
+                NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.0862745098, green: 0.2392156863, blue: 0.4039215686, alpha: 1)
             ]
-        navigationController?.navigationBar.backgroundColor = UIColor.brown
+        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1)
     }
 
     private func showSideMenu(contentAvailability: Bool = true, animated: Bool) {
-        print("サイドメニューの表示")
-
         guard let navigationController = self.navigationController else { return }
         navigationController.addChild(sideMenuViewController)
         sideMenuViewController.view.autoresizingMask = .flexibleHeight

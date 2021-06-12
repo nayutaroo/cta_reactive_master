@@ -5,8 +5,8 @@
 //  Created by 化田晃平 on R 3/05/08.
 //
 
-import Foundation
 @testable import CtaReactiveMaster
+import Foundation
 import RxSwift
 
 struct NewsRepositoryMock: NewsRepository {

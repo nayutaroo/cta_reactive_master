@@ -5,10 +5,10 @@
 //  Created by 化田晃平 on R 3/05/16.
 //
 
-import UIKit
+import RxGesture
 import RxRelay
 import RxSwift
-import RxGesture
+import UIKit
 
 protocol SideMenuViewControllerDelegate: AnyObject {
     func parentViewControllerForSideMenuViewController(_ sideMenuViewController: SideMenuViewController) -> UIViewController
@@ -38,7 +38,6 @@ class SideMenuViewController: UIViewController {
     private var isShown: Bool {
         self.parent != nil
     }
-
 
     init(viewModel: SideMenuViewModel = .init()) {
         self.viewModel = viewModel

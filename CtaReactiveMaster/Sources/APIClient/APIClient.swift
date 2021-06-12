@@ -26,12 +26,11 @@ public struct APIClient {
                         return
                     }
                     do {
-//                        print(String(data: data, encoding: .utf8)!)
                         // Responseはstaticなので T.をつけて利用
                         let model = try decoder.decode(T.Response.self, from: data)
                         observer(.success(model))
-                    }
-                    catch let error {
+
+                    } catch let error {
                         observer(.failure(APIError.decode(error)))
                     }
                 }

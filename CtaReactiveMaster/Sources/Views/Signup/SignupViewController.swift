@@ -5,9 +5,9 @@
 //  Created by 化田晃平 on R 3/03/12.
 //
 
-import UIKit
 import RxCocoa
 import RxSwift
+import UIKit
 
 final class SignupViewController: UIViewController, UITextFieldDelegate {
 
