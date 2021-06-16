@@ -27,7 +27,6 @@ struct NewsRepositoryMock: NewsRepository {
 
     private func createMockNews() -> Single<News> {
         Single<News>.create(subscribe: { observer in
-            print(News.mock)
             observer(.success(.mock))
             return Disposables.create()
         })
