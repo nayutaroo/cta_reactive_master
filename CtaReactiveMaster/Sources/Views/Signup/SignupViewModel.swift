@@ -6,10 +6,8 @@
 //
 
 import Foundation
-
-import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 protocol SignupViewModelType {
     var input: SignupViewModelInput { get }
@@ -91,9 +89,6 @@ final class SignupViewModel: SignupViewModelType, SignupViewModelInput, SignupVi
         signupEvent
             .flatMap { $0.element.map(Observable.just) ?? .empty() }
             .subscribe( Binder(self) { me, _ in
-//                guard let authToken = token["token"] else { return }
-//                me.dependency.keychainAccessRepository.save(token: authToken)
-//                me.loginSucceededRelay.accept(())
                 me.transitionStateRelay.accept(.home)
             })
             .disposed(by: disposeBag)
@@ -102,6 +97,7 @@ final class SignupViewModel: SignupViewModelType, SignupViewModelInput, SignupVi
             .flatMap { $0.error.map(Observable.just) ?? .empty() }
             .subscribe( Binder(self) { me, error in
                 me.transitionStateRelay.accept(.showAlert(message: "サインアップに失敗しました"))
+                print(error)
             })
             .disposed(by: disposeBag)
 

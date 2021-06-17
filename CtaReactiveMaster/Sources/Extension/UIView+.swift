@@ -39,7 +39,7 @@ extension UIView {
     }
 
     // 影幅
-    var shadowOffset : CGSize {
+    var shadowOffset: CGSize {
         get {
             return layer.shadowOffset
         }
@@ -48,27 +48,27 @@ extension UIView {
         }
     }
 
-    //影色
+    // 影色
     var shadowColor: UIColor? {
-        get{
+        get {
             return layer.shadowColor.map { UIColor(cgColor: $0) }
         }
-        set{
+        set {
             layer.shadowColor = newValue?.cgColor
         }
     }
 
     var shadowOpacity: Float {
-        get{
+        get {
             return layer.shadowOpacity
         }
-        set{
+        set {
             layer.shadowOpacity = (newValue >= 0 && newValue <= 1) ? newValue : 0
         }
     }
 
     // 影幅
-    @IBInspectable var shadowRadius : CGFloat {
+    @IBInspectable var shadowRadius: CGFloat {
         get {
             return layer.shadowRadius
         }

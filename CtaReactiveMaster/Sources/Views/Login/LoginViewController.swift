@@ -5,9 +5,9 @@
 //  Created by 化田 晃平 on 2021/03/09.
 //
 
-import UIKit
 import RxCocoa
 import RxSwift
+import UIKit
 
 final class LoginViewController: UIViewController, UITextFieldDelegate {
 

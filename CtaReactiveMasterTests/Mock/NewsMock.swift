@@ -5,8 +5,8 @@
 //  Created by 化田晃平 on R 3/05/11.
 //
 
-import Foundation
 @testable import CtaReactiveMaster
+import Foundation
 
 private var _mock: News?
 extension News {

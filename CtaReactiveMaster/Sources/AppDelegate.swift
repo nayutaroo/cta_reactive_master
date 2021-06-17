@@ -18,7 +18,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let viewModel = HomeViewModel()
         window.rootViewController = LoginViewController()
 
         self.window = window
