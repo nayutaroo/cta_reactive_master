@@ -144,6 +144,13 @@ class SideMenuViewController: UIViewController {
                 me.tapBackground()
             })
             .disposed(by: disposeBag)
+
+        viewModel.isSearchable
+            .subscribe(Binder(self) { me, isSearchable in
+                me.button.isEnabled = isSearchable
+                me.button.alpha = isSearchable ? 1.0 : 0.6
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupView() {
