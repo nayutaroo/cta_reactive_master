@@ -35,7 +35,6 @@ class HomeViewModelTests: XCTestCase {
     }
 
     func testFetchNews() {
-
         let news: News = .mock
         let testArticles: [Article] = news.articles
         var fetchedArticles: [Article] = []

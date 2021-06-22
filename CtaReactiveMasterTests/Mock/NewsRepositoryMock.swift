@@ -7,11 +7,16 @@
 
 @testable import CtaReactiveMaster
 import Foundation
+import RxRelay
 import RxSwift
 
 struct NewsRepositoryMock: NewsRepository {
 
     let apiClient: APIClient
+    var searchNewsParameter: Observable<String> {
+        _searchNewsParameter.asObservable()
+    }
+    private let _searchNewsParameter = PublishRelay<String>()
 
     init(apiClient: APIClient = .init(decoder: .iso8601)) {
         self.apiClient = apiClient
@@ -22,7 +27,8 @@ struct NewsRepositoryMock: NewsRepository {
     }
 
     func searchNews(_ keyword: String) -> Single<News> {
-        createMockNews()
+        _searchNewsParameter.accept(keyword)
+        return createMockNews()
     }
 
     private func createMockNews() -> Single<News> {
