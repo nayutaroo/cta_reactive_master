@@ -20,8 +20,8 @@ protocol SideMenuViewControllerDelegate: AnyObject {
 class SideMenuViewController: UIViewController {
 
     private let contentView: UIView = .init(frame: .zero)
-    private var textField: UITextField = .init(frame: .zero)
-    private let button: UIButton = .init(frame: .zero)
+    private(set) var textField: UITextField = .init(frame: .zero)
+    private(set) var button: UIButton = .init(frame: .zero)
 
     private let disposeBag = DisposeBag()
     weak var delegate: SideMenuViewControllerDelegate?

@@ -12,28 +12,31 @@ import SafariServices
 import UIKit
 
 final class HomeViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView! {
+    @IBOutlet private(set) weak var tableView: UITableView! {
         didSet {
             tableView.register(NewsTableViewCell.nib, forCellReuseIdentifier: NewsTableViewCell.identifier)
             tableView.refreshControl = refreshControl
         }
     }
 
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView! {
+    @IBOutlet private(set) weak var activityIndicator: UIActivityIndicatorView! {
         didSet {
             activityIndicator.hidesWhenStopped = true
         }
     }
 
     private var menuButton: UIBarButtonItem!
-    private var sideMenuViewController: SideMenuViewController!
+    private(set) var sideMenuViewController: SideMenuViewController!
 
     private let disposeBag = DisposeBag()
     private let viewModel: HomeViewModel
     private let refreshControl = UIRefreshControl()
 
-    init(viewModel: HomeViewModel = .init()) {
+    init(viewModel: HomeViewModel = .init(),
+         sideMenuViewController: SideMenuViewController = .init()
+    ) {
         self.viewModel = viewModel
+        self.sideMenuViewController = sideMenuViewController
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -114,7 +117,6 @@ final class HomeViewController: UIViewController {
     private func setupView() {
         menuButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: nil, action: nil)
         menuButton.tintColor = #colorLiteral(red: 0.0862745098, green: 0.2431372549, blue: 0.4039215686, alpha: 1)
-        sideMenuViewController = .init()
         sideMenuViewController.delegate = self
         sideMenuViewController.startPanGestureRecognizing()
 
