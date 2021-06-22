@@ -20,8 +20,8 @@ protocol SideMenuViewControllerDelegate: AnyObject {
 class SideMenuViewController: UIViewController {
 
     private let contentView: UIView = .init(frame: .zero)
-    private var textField: UITextField = .init(frame: .zero)
-    private let button: UIButton = .init(frame: .zero)
+    private(set) var textField: UITextField = .init(frame: .zero)
+    private(set) var button: RoundedButton = .init(frame: .zero)
 
     private let disposeBag = DisposeBag()
     weak var delegate: SideMenuViewControllerDelegate?
@@ -161,7 +161,7 @@ class SideMenuViewController: UIViewController {
 
         textField.frame.size.width = 200
         textField.frame.size.height = 40
-        textField.frame.origin.x = view.bounds.width * 0.2 + 10
+        textField.frame.origin.x = view.bounds.width * 0.5 - 100
         textField.frame.origin.y = 50
 
         textField.placeholder = "検索"
@@ -173,12 +173,15 @@ class SideMenuViewController: UIViewController {
 
         button.frame.size.width = 100
         button.frame.size.height = 50
-        button.frame.origin.x = view.bounds.width * 0.2 + 100
+        button.frame.origin.x = view.bounds.width * 0.5 - 50
         button.frame.origin.y = 120
-        button.backgroundColor = .cyan
-        button.setTitleColor(.blue, for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.0862745098, green: 0.2392156863, blue: 0.4039215686, alpha: 1)
+        button.setTitleColor(.white, for: .normal)
         button.setTitle("検索", for: .normal)
         contentView.addSubview(button)
+
+        print(view.bounds.width)
+        print(button.frame.origin.x)
     }
 
     private func tapBackground() {
