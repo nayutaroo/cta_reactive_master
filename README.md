@@ -1,6 +1,6 @@
-# cta_reactive_master
+# Simple News
 
-<img src="https://user-images.githubusercontent.com/59905087/117824495-7fe71580-b2a9-11eb-92ca-c9bcd6665fff.png" width="300">
+<img src="https://user-images.githubusercontent.com/59905087/123040277-74514780-d42e-11eb-8730-8d4ebb1a828b.png" width="300">
 
 
 CA Tech AccelでiOSアプリ開発におけるReactiveを理解していく学習リポジトリ
