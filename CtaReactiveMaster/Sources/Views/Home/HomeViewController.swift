@@ -121,7 +121,7 @@ final class HomeViewController: UIViewController {
         sideMenuViewController.startPanGestureRecognizing()
 
         navigationItem.leftBarButtonItem = menuButton
-        navigationItem.title = "NewsAPI"
+        navigationItem.title = "Simple News"
         navigationController?.navigationBar.titleTextAttributes
             = [
                 NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 24)!,
